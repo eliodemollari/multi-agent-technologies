@@ -1,0 +1,68 @@
+{
+  "obstacles": [
+    [12, 34],
+    [45, 67],
+    [89, 23],
+    [56, 78],
+    [90, 12],
+    [34, 56],
+    [78, 90],
+    [23, 45],
+    [67, 89],
+    [12, 34]
+  ],
+  "pickup_stations": [
+    [5, 18],
+    [23, 45],
+    [67, 89],
+    [34, 56],
+    [78, 90]
+  ],
+  "delivery_stations": [
+    [15, 27],
+    [39, 52],
+    [58, 71],
+    [73, 86],
+    [95, 10]
+  ],
+  "agents": [
+    [2, 8],
+    [19, 35],
+    [27, 41],
+    [38, 53],
+    [49, 66],
+    [60, 77],
+    [71, 88],
+    [82, 95],
+    [93, 12],
+    [5, 19],
+    [15, 28],
+    [25, 37],
+    [35, 49],
+    [45, 61],
+    [55, 72],
+    [65, 80],
+    [75, 92],
+    [85, 3],
+    [95, 16],
+    [0, 0]
+  ],
+  "grid_size": [100, 100],
+  "strategy": "WeightedDistribution",
+  "pickup_distribution": {
+    "pickup_station_1": 0.3,
+    "pickup_station_2": 0.2,
+    "pickup_station_3": 0.1,
+    "pickup_station_4": 0.25,
+    "pickup_station_5": 0.15
+  },
+  "delivery_weights": {
+    "delivery_station_1": 3,
+    "delivery_station_2": 2,
+    "delivery_station_3": 1,
+    "delivery_station_4": 2,
+    "delivery_station_5": 1
+  },
+  "steps_per_tick": 5
+}
+  
