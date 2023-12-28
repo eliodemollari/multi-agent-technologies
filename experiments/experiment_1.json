@@ -5,11 +5,9 @@
     [89, 23],
     [56, 78],
     [90, 12],
-    [34, 56],
-    [78, 90],
-    [23, 45],
-    [67, 89],
-    [12, 34]
+    [34, 57],
+    [78, 91],
+    [67, 90]
   ],
   "pickup_stations": [
     [5, 18],
@@ -35,25 +33,7 @@
     [71, 88],
     [82, 95],
     [93, 12],
-    [5, 19],
-    [15, 28],
-    [25, 37],
-    [35, 49],
-    [45, 61],
-    [55, 72],
-    [65, 80],
-    [75, 92],
-    [85, 3],
-    [95, 16],
-    [0, 0]
+    [5, 19]
   ],
-  "grid_size": [100, 100],
-  "strategy": "InitialDistribution",
-  "distribution": {
-    "pickup_station_1": ["delivery_station_1", "delivery_station_2"],
-    "pickup_station_2": ["delivery_station_3", "delivery_station_4"],
-    "pickup_station_3": ["delivery_station_5", "delivery_station_1"],
-    "pickup_station_4": ["delivery_station_2", "delivery_station_3"],
-    "pickup_station_5": ["delivery_station_4", "delivery_station_5"]
-  }
+  "grid_size": [100, 100]
 }

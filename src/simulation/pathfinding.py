@@ -2,13 +2,20 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 
+from src.simulation.base.grid import PickupStation, DeliveryStation
 
-def find_shortest_path(grid_size, obstacles, agent_pos, station_pos):
+
+def find_shortest_path(grid, grid_size, obstacles, agent_pos, station_pos, target_station=None, destination_station=None):
     # Unpack the grid size into rows and cols
     rows, cols = grid_size
 
     def get_matrix_element(x, y):
-        return 1 if (x, y) not in obstacles else 0
+        if (x, y) in obstacles:
+            return 0
+        elif isinstance(grid.board[x][y], (PickupStation, DeliveryStation)) and (x, y) not in [target_station, destination_station]:
+            return 0
+        else:
+            return 1
 
     matrix = [[get_matrix_element(x, y) for y in range(cols)] for x in range(rows)]
     grid = Grid(matrix=matrix)

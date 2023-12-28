@@ -1,4 +1,4 @@
-from simulation.base.grid import Grid
+from src.simulation.base.grid import Grid
 
 
 class StationDoesNotExist(Exception):

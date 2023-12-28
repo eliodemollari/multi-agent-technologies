@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from simulation.base.grid import Grid, PickupStation, DeliveryStation, Agent, Obstacle, BoardObject
-from utils import logging_utils
+
+from src.simulation.base.grid import Grid, Obstacle, BoardObject, PickupStation, DeliveryStation
+from src.simulation.reactive_agents import TopCongestionAgent
+from src.utils import logging_utils
 
 # setup logger
 logger = logging_utils.setup_logger('SimulationLogger', 'simulation.log')
@@ -12,7 +14,7 @@ def get_color(board_object: BoardObject) -> str:
         return 'green'
     elif isinstance(board_object, DeliveryStation):
         return 'blue'
-    elif isinstance(board_object, Agent):
+    elif isinstance(board_object, TopCongestionAgent):
         return 'red'
     elif isinstance(board_object, Obstacle):
         return 'orange'
@@ -22,17 +24,27 @@ def get_color(board_object: BoardObject) -> str:
 
 
 def display_grid(grid: Grid) -> None:
-    fig, ax = plt.subplots()
+    text = ''
+    fig, ax = plt.subplots(figsize=(100, 100))
 
     for row_idx, row in enumerate(grid.board):
         for col_idx, cell in enumerate(row):
             if len(cell) == 0:
                 color = 'white'
                 text = ''
-            else:
+            elif len(cell) == 1:
                 color = get_color(cell[0])
-                agent_count = sum(isinstance(c, Agent) for c in cell)
-                text = str(agent_count) if agent_count >= 1 else ''
+                # Check if the agent is carrying an item
+                agent = next((c for c in cell if isinstance(c, TopCongestionAgent)), None)
+                if agent and agent.is_carrying_item:
+                    text = ' (item)'
+            elif len(cell) == 2:  # len(cell) == 2
+                # Check if the cell contains a station and an agent
+                station = next((c for c in cell if isinstance(c, (PickupStation, DeliveryStation))), None)
+                agent = next((c for c in cell if isinstance(c, TopCongestionAgent)), None)
+                if station and agent:
+                    color = get_color(station)
+                    text = '(agent)'
 
             # Draw a rectangle for each cell
             rect = patches.Rectangle((col_idx, -row_idx - 1), 1, 1, linewidth=1, edgecolor='black', facecolor=color)

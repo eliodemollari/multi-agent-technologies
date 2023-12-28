@@ -1,20 +1,18 @@
 import argparse
 import json
 
-from simulation.base.environment import Environment
-from simulation.base.grid import Grid, Obstacle, PickupStation, DeliveryStation, create_empty_board
-from simulation.base.item import ItemStatus
-from simulation.environments.top_congestion_environment import TopCongestionEnvironment
-from simulation.item_factories.initial_distribution import InitialDistribution
-from simulation.item_factories.weighted_distribution import WeightedDistribution
-from simulation.reactive_agents import TopCongestionAgent
-from simulation.simulation import display_grid
+from src.simulation.base.environment import Environment
+from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupStation, DeliveryStation
+from src.simulation.base.item import ItemStatus, Item
+from src.simulation.environments.top_congestion_environment import TopCongestionEnvironment
+from src.simulation.reactive_agents import TopCongestionAgent
+from src.simulation.simulation import display_grid
 
 
 def how_many_items_were_left_behind(environment: Environment) -> None:
     """Show the number of items left awaiting pickup per station, sorted in descending order"""
     stations = environment.state.pickup_stations
-    items_left_behind = {station_id: len(station.to_collect) for station_id, station in stations.items()}
+    items_left_behind = {station_id: len(station.items) for station_id, station in enumerate(stations)}
     items_left_behind_sorted = {k: v for k, v in sorted(items_left_behind.items(), key=lambda item: item[1],
                                                         reverse=True)}
     print(f"Items left behind: {items_left_behind_sorted}")
@@ -24,7 +22,7 @@ def top_deliver_agents(environment: Environment) -> None:
     """Show the number of delivered items per agent, sorted in descending order"""
     agents = environment.state.agents
     items_delivered = {agent_id: sum(1 for item in agent.items if item.status == ItemStatus.DELIVERED)
-                       for agent_id, agent in agents.items()}
+                       for agent_id, agent in enumerate(agents)}
     items_delivered_sorted = {k: v for k, v in sorted(items_delivered.items(), key=lambda item: item[1], reverse=True)}
     print(f"Top delivering agents: {items_delivered_sorted}")
 
@@ -32,8 +30,8 @@ def top_deliver_agents(environment: Environment) -> None:
 def oldest_elements_in_stations(environment: Environment) -> None:
     """Shows the oldest item awaiting pickup in each station, using its creation tick, sorted in ascending order"""
     stations = environment.state.pickup_stations
-    oldest_items = {station_id: min((item.created_tick for item in station.to_collect), default=None)
-                    for station_id, station in stations.items()}
+    oldest_items = {station_id: min((item.created_tick for item in station.items), default=None)
+                    for station_id, station in enumerate(stations)}
     # Remove stations with no items (None)
     oldest_items = {k: v for k, v in oldest_items.items() if v is not None}
     oldest_items_sorted = {k: v for k, v in sorted(oldest_items.items(), key=lambda item: item[1])}
@@ -56,65 +54,40 @@ def setup_simulation(config) -> Environment:
     # Initialize the Grid
     grid_size = config['grid_size']
     board = create_empty_board(grid_size[0], grid_size[1])
-    grid = Grid({}, {}, {}, board)
+    grid = Grid(board)
 
     # Initialize Obstacles
     for obstacle_coords in config['obstacles']:
-        obstacle = Obstacle()
-        grid.add_board_object(obstacle, obstacle_coords)
+        obstacle = Obstacle(obstacle_coords)
+        grid.add_board_object(obstacle)
 
     # Initialize Pickup Stations
-    pickup_stations = {}
-    for idx, station_coords in enumerate(config['pickup_stations'], start=1):
-        pickup_station = PickupStation()
-        pickup_stations[idx] = pickup_station
-        grid.add_board_object(pickup_station, station_coords)
-    grid.pickup_stations = pickup_stations
+    for station_coords in config['pickup_stations']:
+        pickup_station = PickupStation(station_coords)
+        grid.add_board_object(pickup_station)
 
     # Initialize Delivery Stations
-    delivery_stations = {}
-    for idx, station_coords in enumerate(config['delivery_stations'], start=1):
-        delivery_station = DeliveryStation()
-        delivery_stations[idx] = delivery_station
-        grid.add_board_object(delivery_station, station_coords)
-    grid.delivery_stations = delivery_stations
+    for station_coords in config['delivery_stations']:
+        delivery_station = DeliveryStation(station_coords)
+        grid.add_board_object(delivery_station)
 
-    # Initialize Agents
-    agents = {}
-    for idx, agent_coords in enumerate(config['agents']):
-        agent = TopCongestionAgent()
-        agents[idx] = agent
-        grid.add_board_object(agent, agent_coords)
-    grid.agents = agents
+    for agent_coords in config['agents']:
+        agent = TopCongestionAgent(agent_coords)
+        grid.add_board_object(agent)
 
-    # Initialize the ItemFactory based on the strategy defined in the configuration
-    if config['strategy'] == "InitialDistribution":
-        # Convert string keys and values to integers
-        if isinstance(config['distribution'], int):
-            distribution = config['distribution']
-        else:
-            distribution = {
-                int(k.split('_')[-1]): [int(v.split('_')[-1]) for v in vals]
-                for k, vals in config['distribution'].items()
-            }
-        item_factory = InitialDistribution(distribution)
-    elif config['strategy'] == "WeightedDistribution":
-        # TODO: Make it a generic function, or something smarter in the first place
-        pickup_distribution = {int(k.split('_')[-1]): int(v) for k, v in config['pickup_distribution'].items()}
-        delivery_weights = {int(k.split('_')[-1]): int(v) for k, v in config['delivery_weights'].items()}
-        steps_per_tick = config['steps_per_tick']
-        item_factory = WeightedDistribution(pickup_distribution, delivery_weights, steps_per_tick)
-    else:
-        raise ValueError(f"Unknown strategy {config['strategy']}")
+    for pickup_station in grid.pickup_stations:
+        for i in range(5):
+            pickup_station.items.append(
+                Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=pickup_station,
+                     destination=grid.delivery_stations[i]))
 
-    return TopCongestionEnvironment(item_factory, grid)
+    return TopCongestionEnvironment(grid)
 
 
-def run_simulation(environment: Environment, rounds: int, display: bool = False) -> Environment:
-    for _ in range(rounds):
+def run_simulation(environment: Environment, rounds: int) -> Environment:
+    for i in range(rounds):
         environment.simulation_step()
-        if display:
-            display_grid(environment.state)
+    # display_grid(environment.state)
 
     return environment
 
@@ -122,7 +95,7 @@ def run_simulation(environment: Environment, rounds: int, display: bool = False)
 def main(args):
     config = read_config(args.config_file)
     environment = setup_simulation(config)
-    environment = run_simulation(environment, args.rounds, args.display)
+    environment = run_simulation(environment, args.rounds)
     analyze_results(environment)
 
 

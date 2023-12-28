@@ -1,8 +1,8 @@
 import unittest
 import logging
 import os
-from utils import logging_utils
-from simulation.base.item import Item, ItemStatus
+from src.utils import logging_utils
+from src.simulation.base.item import Item, ItemStatus
 
 
 class TestItemLogging(unittest.TestCase):

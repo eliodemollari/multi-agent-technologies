@@ -2,31 +2,25 @@ import io
 import sys
 import unittest
 
-from simulation.base.grid import Grid, PickupStation, DeliveryStation, Agent, Obstacle
-from simulation.base.intentions import Intention
-from simulation.simulation import display_grid
-
-
-class TestAgent(Agent):
-    def make_intention(self, grid: Grid) -> Intention:
-        # Implement the method here
-        pass
+from src.simulation.base.grid import Agent, Grid, PickupStation, DeliveryStation, Obstacle
+from src.simulation.reactive_agents import TopCongestionAgent
+from src.simulation.simulation import display_grid
 
 
 class TestDisplayGrid(unittest.TestCase):
     def setUp(self):
-        pickup_stations = {}
-        delivery_stations = {}
-        agents = {}
         board = [[[] for _ in range(10)] for _ in range(10)]  # Create a 10x10 board of empty cells
-        self.test_grid = Grid(pickup_stations, delivery_stations, agents, board)
-        self.test_grid.add_board_object(PickupStation(), (1, 1))
-        self.test_grid.add_board_object(DeliveryStation(), (2, 2))
-        self.test_grid.add_board_object(TestAgent(), (3, 3))
-        self.test_grid.add_board_object(TestAgent(), (3, 3))
-        self.test_grid.add_board_object(TestAgent(), (3, 3))
-        self.test_grid.add_board_object(TestAgent(), (1, 1))
-        self.test_grid.add_board_object(Obstacle(), (4, 1))
+        self.test_grid = Grid(board)
+
+        pickup_station = PickupStation((1, 1))
+        delivery_station = DeliveryStation((2, 2))
+
+        self.test_grid.add_board_object(pickup_station)
+        self.test_grid.add_board_object(delivery_station)
+        self.test_grid.add_board_object(TopCongestionAgent((1, 1)))
+        self.test_grid.add_board_object(TopCongestionAgent((3, 3)))
+        self.test_grid.add_board_object(TopCongestionAgent((3, 2)))
+        self.test_grid.add_board_object(Obstacle((4, 1)))
 
     def test_display_grid_function(self):
         # Check the position of the PickupStation

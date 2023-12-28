@@ -1,0 +1,13 @@
+.idea
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Python bytecode files
+src/__pycache__/
+src/simulation/__pycache__/
+src/simulation/base/__pycache__/
+src/simulation/environments/__pycache__/
+src/simulation/item_factories/__pycache__/
+src/tests/__pycache__/
+src/utils/__pycache__/
