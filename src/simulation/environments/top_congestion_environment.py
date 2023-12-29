@@ -126,8 +126,10 @@ def _enact_pickup_intention(pickup_intention: Pickup, state: Grid) -> Grid:
         raise IllegalPickup(f"Agent {pickup_intention.agent_id} tried to pick up an item that is not in the pickup "
                             f"station")
     item.status = ItemStatus.IN_TRANSIT
-    agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
-    state.agents[agent_index].items.append(item)
+
+    # Not needed in brokering because the item is already assigned to the agent
+    # agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
+    # state.agents[agent_index].items.append(item)
 
     return state
 
