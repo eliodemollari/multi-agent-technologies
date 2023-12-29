@@ -27,7 +27,7 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
 def _get_intentions(state: Grid) -> list[Intention]:
     list_of_intentions = []
     for agent in state.agents:
-        if agent.is_assigned_item:
+        if agent.is_assigned_item or agent.is_carrying_item:
             list_of_intentions.append(agent.make_intention(state))
     return list_of_intentions
 

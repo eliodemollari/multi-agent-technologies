@@ -22,7 +22,7 @@ class Broker:
         # return intentions
 
     def find_closest_agent(self, position):
-        available_agents = [agent for agent in self.agents if not agent.is_assigned_item]
+        available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]
         if not available_agents:
             return None
         return min(available_agents, key=lambda agent: self.calculate_distance(agent.position, position))
