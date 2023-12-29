@@ -7,6 +7,7 @@ from src.utils import logging_utils
 
 
 class ItemStatus(Enum):
+    ASSIGNED_TO_AGENT = auto()
     AWAITING_PICKUP = auto()
     IN_TRANSIT = auto()
     DELIVERED = auto()
@@ -21,6 +22,7 @@ class Item:
         self.created_tick = created_tick
         self.pickup_tick = None
         self.delivered_tick = None
+        self.agent_id = None
         self.source = source
         self.destination = destination
         self.status = status
