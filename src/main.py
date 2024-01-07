@@ -4,9 +4,9 @@ import json
 from src.simulation.base.environment import Environment
 from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupStation, DeliveryStation
 from src.simulation.base.item import ItemStatus, Item
+from src.simulation.environments import broker
 from src.simulation.environments.top_congestion_environment import TopCongestionEnvironment
 from src.simulation.reactive_agents import TopCongestionAgent
-from src.simulation.simulation import display_grid
 
 
 def how_many_items_were_left_behind(environment: Environment) -> None:
@@ -56,6 +56,8 @@ def setup_simulation(config) -> Environment:
     board = create_empty_board(grid_size[0], grid_size[1])
     grid = Grid(board)
 
+    broker_instance = broker.Broker(grid)
+
     # Initialize Obstacles
     for obstacle_coords in config['obstacles']:
         obstacle = Obstacle(obstacle_coords)
@@ -63,7 +65,7 @@ def setup_simulation(config) -> Environment:
 
     # Initialize Pickup Stations
     for station_coords in config['pickup_stations']:
-        pickup_station = PickupStation(station_coords)
+        pickup_station = PickupStation(station_coords, broker_instance)
         grid.add_board_object(pickup_station)
 
     # Initialize Delivery Stations
@@ -77,7 +79,7 @@ def setup_simulation(config) -> Environment:
 
     for pickup_station in grid.pickup_stations:
         for i in range(2):
-            pickup_station.items.append(
+            pickup_station.add_item(
                 Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=pickup_station,
                      destination=grid.delivery_stations[i]))
 

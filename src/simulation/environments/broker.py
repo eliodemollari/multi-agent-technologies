@@ -21,6 +21,19 @@ class Broker:
                     # intentions.append(intention)
         # return intentions
 
+    def recommend_agents(self, item):
+        recommended_agents = []
+        if item.status == ItemStatus.AWAITING_PICKUP:
+            closest_agent = self.find_three_most_closest_agents(item.source.position)
+            if closest_agent is not None:
+                recommended_agents.append(closest_agent)
+
+    def find_three_most_closest_agents(self, position):
+        available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]
+        if not available_agents:
+            return None
+        return sorted(available_agents, key=lambda agent: self.calculate_distance(agent.position, position))[:3]
+
     def find_closest_agent(self, position):
         available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]
         if not available_agents:

@@ -1,3 +1,4 @@
+import random
 from abc import ABC, abstractmethod
 import uuid
 
@@ -6,7 +7,6 @@ from src.utils import logging_utils
 
 # setup logger
 logger = logging_utils.setup_logger('GridLogger', 'grid.log')
-
 
 def create_empty_board(dim_x: int, dim_y: int) -> list[list[list['BoardObject']]]:
     return [[[] for _ in range(dim_y)] for _ in range(dim_x)]
@@ -43,10 +43,33 @@ class DeliveryStation(BoardObject, ABC):
 
 
 class PickupStation(BoardObject, ABC):
-    def __init__(self, position: tuple[int, int]):
+    def __init__(self, position: tuple[int, int], broker_instance=None):
         super().__init__()
         self.set_position(position)
         self.items = []  # List of items at the station
+        self.broker = broker_instance
+
+    # Add item to pickup station
+    def add_item(self, item):
+        self.items.append(item)
+        self.request_agents(item)
+
+    # Remove item from pickup station
+    def remove_item(self, item):
+        self.items.remove(item)
+
+    # Contact the broker to request agents availability
+    def request_agents(self, item):
+        available_agents = self.broker.recommend_agents(item)
+        return available_agents
+
+    # Select an agent from the list of available agents by assigning the item to the agent
+    @staticmethod
+    def select_agent(available_agents, item):
+        # Randomly select an agent from the list of available agents
+        random_index = random.randint(0, len(available_agents) - 1)
+        agent = available_agents[random_index]
+        agent.mark_item_as_assigned(item)
 
 
 class Agent(BoardObject, ABC):
