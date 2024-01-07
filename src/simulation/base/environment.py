@@ -20,7 +20,7 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
             source=pickup_station,
             destination=delivery_station
         )
-        pickup_station.items.append(item)
+        pickup_station.add_item(item)
     logger.info(f"{num_items} items added to pickup station {pickup_station.id}")
 
 
@@ -73,6 +73,7 @@ class Environment(ABC):
         return state
 
     def simulation_step(self) -> Grid:
+        print(f"Simulation step started at tick {self.tick}")
         random_pickup_station = random.randint(0, len(self.state.pickup_stations) - 1)
         random_delivery_station = random.randint(0, len(self.state.delivery_stations) - 1)
         generate_items(self.state.pickup_stations[random_pickup_station],
