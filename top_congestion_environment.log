@@ -1,1 +1,0 @@
-2023-12-29 12:27:33,954 ERROR Illegal intention detected: Agent 371178ac-c5a2-4a7a-9a73-2e9dbc39d598 tried to move into an [<src.simulation.base.grid.Obstacle object at 0x10f962f00>] in position (90, 12)

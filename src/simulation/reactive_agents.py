@@ -28,12 +28,6 @@ class TopCongestionAgent(Agent):
                 return item
         return None
 
-    def mark_item_as_assigned(self, item):
-        self.items.append(item)
-        item.agent_id = self.id
-        item.status = ItemStatus.ASSIGNED_TO_AGENT
-
-
     def is_on_pickup_station(self, grid: Grid) -> PickupStation | None:
         for pickup_station in grid.pickup_stations:
             if pickup_station.position == self.position:
