@@ -11,3 +11,4 @@ src/simulation/environments/__pycache__/
 src/simulation/item_factories/__pycache__/
 src/tests/__pycache__/
 src/utils/__pycache__/
+*.log
