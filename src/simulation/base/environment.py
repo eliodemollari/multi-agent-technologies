@@ -78,7 +78,7 @@ class Environment(ABC):
     def simulation_step(self) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
-        if self.items_added < 20:
+        if self.items_added < 50:
             random_pickup_station = random.randint(0, len(self.state.pickup_stations) - 1)
             random_delivery_station = random.randint(0, len(self.state.delivery_stations) - 1)
             generate_items(self.state.pickup_stations[random_pickup_station],
