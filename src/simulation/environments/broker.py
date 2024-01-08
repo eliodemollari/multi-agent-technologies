@@ -1,5 +1,8 @@
 from src.simulation.base.grid import Grid
 from src.simulation.base.item import ItemStatus
+from src.utils import logging_utils
+
+logger = logging_utils.setup_logger('Brokerlogger', 'broker.log')
 
 
 class Broker:
@@ -9,6 +12,8 @@ class Broker:
         self.agents = state.agents
 
     def assign_items_to_agents(self):
+        logger.info(f"Broker assigning items to agents")
+        print(f"Broker assigning items to agents")
         # intentions = []
         for item in self.items:
             if item.status == ItemStatus.AWAITING_PICKUP:
@@ -22,6 +27,8 @@ class Broker:
         # return intentions
 
     def recommend_agents(self, item):
+        print(f"Broker recommending top 3 available agents for item")
+        logger.info(f"Broker recommending top 3 available agents for item")
         recommended_agents = []
         if item.status == ItemStatus.AWAITING_PICKUP:
             closest_agent = self.find_three_most_closest_agents(item.source.position)
@@ -29,18 +36,21 @@ class Broker:
                 recommended_agents.append(closest_agent)
 
     def find_three_most_closest_agents(self, position):
+        logger.info(f"Broker finding three most closest agents")
         available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]
         if not available_agents:
             return None
         return sorted(available_agents, key=lambda agent: self.calculate_distance(agent.position, position))[:3]
 
     def find_closest_agent(self, position):
+        logger.info(f"Broker finding closest agent")
         available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]
         if not available_agents:
             return None
         return min(available_agents, key=lambda agent: self.calculate_distance(agent.position, position))
 
     def _get_all_items(self):
+        logger.info(f"Broker getting all items")
         all_items = [item for station in self.state.pickup_stations for item in station.items]
         return all_items
 

@@ -51,6 +51,8 @@ class PickupStation(BoardObject, ABC):
 
     # Add item to pickup station
     def add_item(self, item):
+        print(f"Adding item {item} to pickup station {self.id}")
+        logger.info(f"Adding item {item} to pickup station {self.id}")
         self.items.append(item)
         self.request_agents(item)
 
@@ -60,6 +62,9 @@ class PickupStation(BoardObject, ABC):
 
     # Contact the broker to request agents availability
     def request_agents(self, item):
+        # Pickup station requests available agents from the broker
+        print(f"Pickup Station {self} requesting available agents for item {item} from broker")
+        logger.info(f"Pickup Station {self} requesting available agents for item {item} from broker")
         available_agents = self.broker.recommend_agents(item)
         return available_agents
 
@@ -67,6 +72,8 @@ class PickupStation(BoardObject, ABC):
     @staticmethod
     def select_agent(available_agents, item):
         # Randomly select an agent from the list of available agents
+        print(f"Pickup Station selecting agent for item {item}")
+        logger.info(f"Pickup Station selecting agent for item {item}")
         random_index = random.randint(0, len(available_agents) - 1)
         agent = available_agents[random_index]
         agent.mark_item_as_assigned(item)

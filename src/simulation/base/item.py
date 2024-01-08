@@ -29,6 +29,7 @@ class Item:
 
         self.logger = logging_utils.setup_logger("ItemLogger", "item.log")
         self.logger.info(f"Item created with tick {created_tick}, source {source}, destination {destination}, status {status}")
+        print(f"Item created with tick {created_tick}, source {source}, destination {destination}, status {status}")
 
     def set_status(self, status: ItemStatus, tick: int):
         self.status = status
