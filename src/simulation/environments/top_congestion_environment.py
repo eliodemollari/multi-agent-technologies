@@ -96,7 +96,7 @@ def overflowing_pickups(grouped_intentions: dict[int, dict[int | None, list[Pick
     return overflow_intentions
 
 
-def _enact_deliver_intention(deliver_intention: Deliver, state: Grid) -> Grid:
+def _enact_deliver_intention(deliver_intention: Deliver, state: Grid, tick: int) -> Grid:
     # Find the item in the agent's inventory
     agent_index = state.get_agent_index_by_id(deliver_intention.agent_id)
     agent = state.agents[agent_index]
@@ -106,12 +106,14 @@ def _enact_deliver_intention(deliver_intention: Deliver, state: Grid) -> Grid:
         raise IllegalDelivery(f"Agent {deliver_intention.agent_id} tried to deliver an item that it does not have")
 
     # Change the item's status. It is not actually dropped to the delivery station.
-    item_to_deliver.status = ItemStatus.DELIVERED
+    item_to_deliver.set_status(ItemStatus.DELIVERED, tick)
+    logger.info(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
+    print(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
 
     return state
 
 
-def _enact_pickup_intention(pickup_intention: Pickup, state: Grid) -> Grid:
+def _enact_pickup_intention(pickup_intention: Pickup, state: Grid, tick: int) -> Grid:
     # Find the agent's location and the pickup station
     agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
     agent_position = state.agents[agent_index].position
@@ -125,7 +127,9 @@ def _enact_pickup_intention(pickup_intention: Pickup, state: Grid) -> Grid:
     except IndexError:
         raise IllegalPickup(f"Agent {pickup_intention.agent_id} tried to pick up an item that is not in the pickup "
                             f"station")
-    item.status = ItemStatus.IN_TRANSIT
+    item.set_status(ItemStatus.IN_TRANSIT, tick)
+    logger.info(f"Item {item} picked up by agent {pickup_intention.agent_id}")
+    print(f"Item {item} picked up by agent {pickup_intention.agent_id}")
     agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
     state.agents[agent_index].items.append(item)
 
@@ -156,12 +160,12 @@ class TopCongestionEnvironment(Environment):
 
         return contradicting_intentions
 
-    def _enact_valid_intentions(self, consistent_intentions: list[Intention], state: Grid) -> Grid:
+    def _enact_valid_intentions(self, consistent_intentions: list[Intention], state: Grid, tick: int) -> Grid:
         for intention in consistent_intentions:
             if isinstance(intention, Pickup):
-                state = _enact_pickup_intention(intention, state)
+                state = _enact_pickup_intention(intention, state, tick)
             elif isinstance(intention, Deliver):
-                state = _enact_deliver_intention(intention, state)
+                state = _enact_deliver_intention(intention, state, tick)
             elif isinstance(intention, Move):
                 state = enact_move_intention(intention, state)
             else:
