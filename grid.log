@@ -1,0 +1,173 @@
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d4560> to grid at position [12, 34]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1031f7d40> to grid at position [45, 67]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d44d0> to grid at position [89, 24]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d43e0> to grid at position [56, 78]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d4290> to grid at position [90, 12]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d4710> to grid at position [34, 57]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d4530> to grid at position [78, 91]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.Obstacle object at 0x1059d46b0> to grid at position [67, 90]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4680> to grid at position [5, 18]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1055b11f0> to grid at position [23, 45]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4800> to grid at position [67, 89]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d48f0> to grid at position [34, 56]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4950> to grid at position [78, 90]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4980> to grid at position [1, 16]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4470> to grid at position [23, 55]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4920> to grid at position [37, 49]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4a40> to grid at position [44, 36]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.PickupStation object at 0x1059d4a70> to grid at position [18, 20]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.DeliveryStation object at 0x1059d4ad0> to grid at position [15, 27]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.DeliveryStation object at 0x1059d4b60> to grid at position [39, 52]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.DeliveryStation object at 0x1059d4bc0> to grid at position [58, 71]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.DeliveryStation object at 0x1059d4c20> to grid at position [73, 86]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.base.grid.DeliveryStation object at 0x1059d4c80> to grid at position [95, 10]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4ce0> to grid at position [2, 8]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d49b0> to grid at position [19, 35]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4da0> to grid at position [27, 41]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4e00> to grid at position [38, 53]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4e60> to grid at position [49, 66]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4ec0> to grid at position [60, 77]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4f20> to grid at position [71, 88]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4f80> to grid at position [82, 95]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d4fe0> to grid at position [93, 12]
+2024-01-10 13:31:42,797 INFO Added <src.simulation.reactive_agents.TopCongestionAgent object at 0x1059d5040> to grid at position [5, 19]
+2024-01-10 13:31:42,797 INFO Adding item <src.simulation.base.item.Item object at 0x1059d4d40> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:42,797 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d4d40> from broker
+2024-01-10 13:31:42,798 INFO Adding item <src.simulation.base.item.Item object at 0x1059d52b0> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:42,798 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d52b0> from broker
+2024-01-10 13:31:42,798 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5100> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:42,798 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5100> from broker
+2024-01-10 13:31:42,798 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5550> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:42,798 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5550> from broker
+2024-01-10 13:31:42,798 INFO Adding item <src.simulation.base.item.Item object at 0x1059d53d0> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:42,798 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d53d0> from broker
+2024-01-10 13:31:42,798 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5850> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:42,798 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5850> from broker
+2024-01-10 13:31:42,799 INFO Adding item <src.simulation.base.item.Item object at 0x1059d56d0> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:42,799 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d56d0> from broker
+2024-01-10 13:31:42,799 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5b50> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:42,799 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5b50> from broker
+2024-01-10 13:31:42,799 INFO Adding item <src.simulation.base.item.Item object at 0x1059d59d0> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:42,799 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d59d0> from broker
+2024-01-10 13:31:42,799 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5e50> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:42,799 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5e50> from broker
+2024-01-10 13:31:42,800 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5cd0> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:42,800 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5cd0> from broker
+2024-01-10 13:31:42,801 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6150> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:42,801 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6150> from broker
+2024-01-10 13:31:42,802 INFO Adding item <src.simulation.base.item.Item object at 0x1059d5fd0> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:42,802 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d5fd0> from broker
+2024-01-10 13:31:42,807 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6450> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:42,807 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6450> from broker
+2024-01-10 13:31:42,808 INFO Adding item <src.simulation.base.item.Item object at 0x1059d62d0> to pickup station 2927142e-a97d-440d-905b-9eec613adbde
+2024-01-10 13:31:42,808 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4920> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d62d0> from broker
+2024-01-10 13:31:42,808 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6750> to pickup station 2927142e-a97d-440d-905b-9eec613adbde
+2024-01-10 13:31:42,808 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4920> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6750> from broker
+2024-01-10 13:31:42,810 INFO Adding item <src.simulation.base.item.Item object at 0x1059d65d0> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:42,810 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d65d0> from broker
+2024-01-10 13:31:42,811 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6a50> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:42,811 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6a50> from broker
+2024-01-10 13:31:42,813 INFO Adding item <src.simulation.base.item.Item object at 0x1059d68d0> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:42,813 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d68d0> from broker
+2024-01-10 13:31:42,814 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6e70> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:42,814 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6e70> from broker
+2024-01-10 13:31:42,814 INFO Adding item <src.simulation.base.item.Item object at 0x1059d6c60> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:42,814 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d6c60> from broker
+2024-01-10 13:31:42,956 INFO Adding item <src.simulation.base.item.Item object at 0x1034568a0> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:42,956 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x1034568a0> from broker
+2024-01-10 13:31:43,089 INFO Adding item <src.simulation.base.item.Item object at 0x1059b1430> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:43,089 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x1059b1430> from broker
+2024-01-10 13:31:43,227 INFO Adding item <src.simulation.base.item.Item object at 0x1059b1520> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:43,227 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059b1520> from broker
+2024-01-10 13:31:43,366 INFO Adding item <src.simulation.base.item.Item object at 0x10594e6c0> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:43,366 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x10594e6c0> from broker
+2024-01-10 13:31:43,503 INFO Adding item <src.simulation.base.item.Item object at 0x1059b1700> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:43,503 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x1059b1700> from broker
+2024-01-10 13:31:43,630 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7530> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:43,630 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7530> from broker
+2024-01-10 13:31:43,805 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7320> to pickup station 2927142e-a97d-440d-905b-9eec613adbde
+2024-01-10 13:31:43,805 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4920> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7320> from broker
+2024-01-10 13:31:43,970 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7830> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:43,970 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7830> from broker
+2024-01-10 13:31:44,149 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7350> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:44,149 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7350> from broker
+2024-01-10 13:31:44,322 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7290> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:44,322 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7290> from broker
+2024-01-10 13:31:44,490 INFO Adding item <src.simulation.base.item.Item object at 0x1059d76b0> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:44,490 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d76b0> from broker
+2024-01-10 13:31:44,657 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7800> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:44,657 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7800> from broker
+2024-01-10 13:31:44,850 INFO Adding item <src.simulation.base.item.Item object at 0x1059d7500> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:44,850 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x1059d7500> from broker
+2024-01-10 13:31:45,022 INFO Adding item <src.simulation.base.item.Item object at 0x105ab5940> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:45,022 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab5940> from broker
+2024-01-10 13:31:45,205 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6720> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:45,205 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6720> from broker
+2024-01-10 13:31:45,389 INFO Adding item <src.simulation.base.item.Item object at 0x105ab5b50> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:45,389 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab5b50> from broker
+2024-01-10 13:31:45,581 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7620> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:45,581 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7620> from broker
+2024-01-10 13:31:45,761 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7dd0> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:45,761 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7dd0> from broker
+2024-01-10 13:31:45,938 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4410> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:45,938 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4410> from broker
+2024-01-10 13:31:46,099 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4f80> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:46,099 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4f80> from broker
+2024-01-10 13:31:46,278 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6ff0> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:46,278 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6ff0> from broker
+2024-01-10 13:31:46,440 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4650> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:46,440 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4650> from broker
+2024-01-10 13:31:46,611 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7da0> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:46,611 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7da0> from broker
+2024-01-10 13:31:46,783 INFO Adding item <src.simulation.base.item.Item object at 0x105ab49e0> to pickup station d66dd665-cf4c-4dcc-b362-c0c37248f781
+2024-01-10 13:31:46,783 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4800> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab49e0> from broker
+2024-01-10 13:31:46,948 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6780> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:46,948 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6780> from broker
+2024-01-10 13:31:47,103 INFO Adding item <src.simulation.base.item.Item object at 0x105ab77d0> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:47,103 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab77d0> from broker
+2024-01-10 13:31:47,266 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6f60> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:47,266 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6f60> from broker
+2024-01-10 13:31:47,431 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4d70> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:47,431 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4d70> from broker
+2024-01-10 13:31:47,586 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6180> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:47,586 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6180> from broker
+2024-01-10 13:31:47,743 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7cb0> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:47,743 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7cb0> from broker
+2024-01-10 13:31:47,897 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4ef0> to pickup station fb9d93c4-30f1-45d4-9415-f9e97841f053
+2024-01-10 13:31:47,897 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d48f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4ef0> from broker
+2024-01-10 13:31:48,048 INFO Adding item <src.simulation.base.item.Item object at 0x105ab46b0> to pickup station 28a2e769-6c7e-4aeb-af84-e559aedb9561
+2024-01-10 13:31:48,048 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4680> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab46b0> from broker
+2024-01-10 13:31:48,200 INFO Adding item <src.simulation.base.item.Item object at 0x105ab48f0> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:48,200 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab48f0> from broker
+2024-01-10 13:31:48,345 INFO Adding item <src.simulation.base.item.Item object at 0x105ab59d0> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:48,345 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab59d0> from broker
+2024-01-10 13:31:48,490 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4b90> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:48,490 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4b90> from broker
+2024-01-10 13:31:48,615 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4ad0> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:48,615 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4ad0> from broker
+2024-01-10 13:31:48,783 INFO Adding item <src.simulation.base.item.Item object at 0x105ab43e0> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:48,783 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab43e0> from broker
+2024-01-10 13:31:48,933 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7380> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:48,933 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7380> from broker
+2024-01-10 13:31:49,072 INFO Adding item <src.simulation.base.item.Item object at 0x105ab52e0> to pickup station 571240de-ebbd-4ff9-9155-ad76c37ddccb
+2024-01-10 13:31:49,072 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4950> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab52e0> from broker
+2024-01-10 13:31:49,228 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4710> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:49,229 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4710> from broker
+2024-01-10 13:31:49,384 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6120> to pickup station 48b6fa08-ecd7-49ac-8255-9e22b5529bc6
+2024-01-10 13:31:49,384 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4470> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6120> from broker
+2024-01-10 13:31:49,525 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6e70> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:49,525 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6e70> from broker
+2024-01-10 13:31:49,690 INFO Adding item <src.simulation.base.item.Item object at 0x105ab4920> to pickup station c98070ed-45c7-4b5f-9e46-8172d9cea15b
+2024-01-10 13:31:49,690 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a70> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab4920> from broker
+2024-01-10 13:31:49,851 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6c60> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:49,851 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6c60> from broker
+2024-01-10 13:31:50,011 INFO Adding item <src.simulation.base.item.Item object at 0x105ab6de0> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:50,011 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab6de0> from broker
+2024-01-10 13:31:50,167 INFO Adding item <src.simulation.base.item.Item object at 0x105ab71a0> to pickup station b64c06d1-1b13-478e-9e6b-e0d4a166d62e
+2024-01-10 13:31:50,167 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1055b11f0> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab71a0> from broker
+2024-01-10 13:31:50,322 INFO Adding item <src.simulation.base.item.Item object at 0x105ab7740> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:50,322 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab7740> from broker
+2024-01-10 13:31:50,474 INFO Adding item <src.simulation.base.item.Item object at 0x105ab5820> to pickup station 8563acf2-f8a8-4193-92ea-1c0af794c89a
+2024-01-10 13:31:50,474 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4980> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab5820> from broker
+2024-01-10 13:31:50,621 INFO Adding item <src.simulation.base.item.Item object at 0x105ab5460> to pickup station 434ad075-b523-4404-8713-0f1da7dfe3a0
+2024-01-10 13:31:50,621 INFO Pickup Station <src.simulation.base.grid.PickupStation object at 0x1059d4a40> requesting available agents for item <src.simulation.base.item.Item object at 0x105ab5460> from broker
