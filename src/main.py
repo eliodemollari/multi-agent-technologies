@@ -6,42 +6,51 @@ from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupS
 from src.simulation.base.item import ItemStatus, Item
 from src.simulation.environments.top_congestion_environment import TopCongestionEnvironment
 from src.simulation.reactive_agents import TopCongestionAgent
-from src.simulation.simulation import display_grid
 
 
-def how_many_items_were_left_behind(environment: Environment) -> None:
-    """Show the number of items left awaiting pickup per station, sorted in descending order"""
-    stations = environment.state.pickup_stations
-    items_left_behind = {station_id: len(station.items) for station_id, station in enumerate(stations)}
-    items_left_behind_sorted = {k: v for k, v in sorted(items_left_behind.items(), key=lambda item: item[1],
-                                                        reverse=True)}
-    print(f"Items left behind: {items_left_behind_sorted}")
-
-
-def top_deliver_agents(environment: Environment) -> None:
-    """Show the number of delivered items per agent, sorted in descending order"""
+def average_delivery_time_per_step(environment: Environment) -> None:
+    """Calculate the average delivery time per simulation step for all delivered items"""
     agents = environment.state.agents
-    items_delivered = {agent_id: sum(1 for item in agent.items if item.status == ItemStatus.DELIVERED)
-                       for agent_id, agent in enumerate(agents)}
-    items_delivered_sorted = {k: v for k, v in sorted(items_delivered.items(), key=lambda item: item[1], reverse=True)}
-    print(f"Top delivering agents: {items_delivered_sorted}")
+    delivery_times = [item.delivered_tick - item.created_tick for agent in agents for item in agent.items if item.status == ItemStatus.DELIVERED]
+    average_delivery_time = sum(delivery_times) / len(delivery_times) if delivery_times else 0
+    average_delivery_time_per_step = average_delivery_time / environment.tick if environment.tick else 0
+    print(f"Average delivery time per step: {average_delivery_time_per_step}")
 
 
-def oldest_elements_in_stations(environment: Environment) -> None:
-    """Shows the oldest item awaiting pickup in each station, using its creation tick, sorted in ascending order"""
+def total_items_delivered(environment: Environment) -> None:
+    """Calculate the total number of items delivered by all agents"""
+    agents = environment.state.agents
+    total_delivered = sum(1 for agent in agents for item in agent.items if item.status == ItemStatus.DELIVERED)
+    print(f"Total items delivered: {total_delivered}")
+
+
+def total_items_awaiting_pickup(environment: Environment) -> None:
+    """Calculate the total number of items awaiting pickup at all stations"""
     stations = environment.state.pickup_stations
-    oldest_items = {station_id: min((item.created_tick for item in station.items), default=None)
-                    for station_id, station in enumerate(stations)}
-    # Remove stations with no items (None)
-    oldest_items = {k: v for k, v in oldest_items.items() if v is not None}
-    oldest_items_sorted = {k: v for k, v in sorted(oldest_items.items(), key=lambda item: item[1])}
-    print(f"Oldest items in stations: {oldest_items_sorted}")
+    total_awaiting_pickup = sum(len(station.items) for station in stations)
+    print(f"Total items awaiting pickup: {total_awaiting_pickup}")
+
+
+def total_items_in_transit(environment: Environment) -> None:
+    """Calculate the total number of items in transit"""
+    agents = environment.state.agents
+    total_in_transit = sum(1 for agent in agents for item in agent.items if item.status == ItemStatus.IN_TRANSIT)
+    print(f"Total items in transit: {total_in_transit}")
+
+
+def agent_efficiency(environment: Environment, total_ticks: int) -> None:
+    """Calculate the efficiency of each agent as items delivered per tick"""
+    agents = environment.state.agents
+    efficiencies = {agent_id: sum(1 for item in agent.items if item.status == ItemStatus.DELIVERED) / total_ticks for agent_id, agent in enumerate(agents)}
+    print(f"Agent efficiencies: {efficiencies}")
 
 
 def analyze_results(environment: Environment) -> None:
-    how_many_items_were_left_behind(environment)
-    top_deliver_agents(environment)
-    oldest_elements_in_stations(environment)
+    average_delivery_time_per_step(environment)
+    total_items_delivered(environment)
+    total_items_awaiting_pickup(environment)
+    total_items_in_transit(environment)
+    agent_efficiency(environment, environment.tick)
 
 
 def read_config(file_path):

@@ -92,6 +92,7 @@ class Grid:
             raise InvalidGrid(f"Object {obj} of type {type(obj)} is not a valid board object")
 
         logger.info(f"Added {obj} to grid at position {obj.position}")
+        print(f"Added {obj} to grid at position {obj.position}")
 
     def remove_board_object(self, obj: BoardObject, position: tuple[int, int]):
         x, y = position

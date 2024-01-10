@@ -52,6 +52,7 @@ class TopCongestionAgent(Agent):
             # If the agent carrying on an item and is on a DeliveryStation, deliver the item
             if destination_station_position == self.position:
                 logger.info(f"Agent {self.id} is delivering item {item_to_deliver.id}")  # log info message
+                print(f"Agent {self.id} is delivering item {item_to_deliver.id}")
                 return Deliver(self.id)
             # If the agent is carrying an item and is not on a DeliveryStation, move towards the destination
             else:
@@ -66,6 +67,7 @@ class TopCongestionAgent(Agent):
                 # ... existing code to find the path to the target station ...
                 logger.info(f"Agent {self.id} is moving towards the target station position in "
                             f"{destination_station_position}")
+                print(f"Agent {self.id} is moving towards the target station position in {destination_station_position}")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))
 
         # When Agent is not carrying an item
@@ -82,8 +84,8 @@ class TopCongestionAgent(Agent):
             if target_station_position == self.position:
                 logger.info(f"Agent {self.id} is picking up an item at the pickup station position in "
                             f"{target_station_position}")
-                # item = target_station.items[0]
-                # return Pickup(self.id, item.id)
+                print(f"Agent {self.id} is picking up an item at the pickup station "
+                      f"position in {target_station_position}")
                 return Pickup(self.id, item_to_pickup.id)
             # If the agent is not carrying an item and is not on a PickupStation, move towards the target station
             else:
@@ -96,4 +98,5 @@ class TopCongestionAgent(Agent):
                     target_station_position
                 )
                 logger.info(f"Agent {self.id} is moving towards the target station")  # log info message
+                print(f"Agent {self.id} is moving towards the target station")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))

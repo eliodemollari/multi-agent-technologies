@@ -1,5 +1,8 @@
 from src.simulation.base.grid import Grid
 from src.simulation.base.item import ItemStatus
+from src.utils import logging_utils
+
+logger = logging_utils.setup_logger('BrokerLogger', 'broker.log')
 
 
 class Broker:
@@ -9,7 +12,8 @@ class Broker:
         self.agents = state.agents
 
     def assign_items_to_agents(self):
-        # intentions = []
+        logger.info("Assigning items to agents")
+        print("Assigning items to agents")
         for item in self.items:
             if item.status == ItemStatus.AWAITING_PICKUP:
                 closest_agent = self.find_closest_agent(item.source.position)
@@ -17,9 +21,8 @@ class Broker:
                     closest_agent.items.append(item)
                     item.agent_id = closest_agent.id
                     item.status = ItemStatus.ASSIGNED_TO_AGENT
-                    # intention = closest_agent.make_intention(self.state)
-                    # intentions.append(intention)
-        # return intentions
+                    logger.info(f"Item {item.id} assigned to agent {closest_agent.id}")
+                    print(f"Item {item.id} assigned to agent {closest_agent.id}")
 
     def find_closest_agent(self, position):
         available_agents = [agent for agent in self.agents if (not agent.is_assigned_item and not agent.is_carrying_item)]

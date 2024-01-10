@@ -13,6 +13,7 @@ class Intention(ABC):
     def __init__(self, agent_id: int):
         self.agent_id = agent_id
         logger.info(f"Intention initialized by agent {agent_id}")
+        print(f"Intention initialized by agent {agent_id}")
 
 
 class Pickup(Intention):
@@ -23,6 +24,7 @@ class Pickup(Intention):
         super().__init__(agent_id)
         self.item_id = item_id
         logger.info(f"Pickup intention initialized by agent {agent_id} for item {item_id}")
+        print(f"Pickup intention initialized by agent {agent_id} for item {item_id}")
 
 
 class Deliver(Intention):
@@ -33,6 +35,7 @@ class Deliver(Intention):
         super().__init__(agent_id)
         self.item_id = item_id
         logger.info(f"Delivery intention initialized by agent {agent_id} for item {item_id}")
+        print(f"Delivery intention initialized by agent {agent_id} for item {item_id}")
 
 
 class Move(Intention):
@@ -51,3 +54,4 @@ class Move(Intention):
             raise ValueError(f"Invalid move direction: {direction}. Allowed directions are {self.ALLOWED_MOVES}")
         self.direction = direction
         logger.info(f"Move intention initialized by agent {agent_id} to direction {direction}")
+        print(f"Move intention initialized by agent {agent_id} to direction {direction}")

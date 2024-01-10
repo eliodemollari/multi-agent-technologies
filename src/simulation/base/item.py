@@ -29,10 +29,15 @@ class Item:
 
         self.logger = logging_utils.setup_logger("ItemLogger", "item.log")
         self.logger.info(f"Item created with tick {created_tick}, source {source}, destination {destination}, status {status}")
+        print(f"Item created with tick {created_tick}, source {source}, destination {destination}, status {status}")
 
     def set_status(self, status: ItemStatus, tick: int):
         self.status = status
         if status == ItemStatus.IN_TRANSIT:
             self.pickup_tick = tick
+            self.logger.info(f"Item {self.id} picked up at tick {tick}")
+            print(f"Item {self.id} picked up at tick {tick}")
         elif status == ItemStatus.DELIVERED:
             self.delivered_tick = tick
+            self.logger.info(f"Item {self.id} delivered at tick {tick}")
+            print(f"Item {self.id} delivered at tick {tick}")
