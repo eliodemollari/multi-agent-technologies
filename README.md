@@ -20,3 +20,30 @@ The Recommendation technique is a nuanced brokering approach where the broker re
 To evaluate a specific technique, switch to the relevant branch by using the command `git checkout <branch-name>`. Replace `<branch-name>` with either `master`, `brokering`, or `recommendation` based on the technique you want to evaluate.
 
 After switching to the desired branch, run the simulation using the command python `main.py`. Make sure you have all the necessary dependencies installed.
+
+## Running Experiments
+Our codebase supports running different experiments by varying the initial setup for the environment. This is achieved by passing different JSON files as parameters to the `main.py` script.
+
+The `main.py` script expects two parameters: `rounds` and a JSON file path. `rounds` represents the number of rounds the simulation will run, and the JSON file provides the initial setup for the environment.
+
+We've provided several JSON files that represent different experimental setups by varying certain parameters. You can find these files in the `experiments` folder. Here are the available files:
+- `10_pickup_stations.json`
+- `15_pickup_stations_experiment.json`
+- `16_obstacles_experiment.json`
+- `20_agent_experiment.json`
+- `30_agents_experiment.json`
+- `experiment_1.json`
+
+You can choose to run the first experiment, which uses the main setup `experiment_1.json`, or different variations by specifying one of the other JSON files.
+
+### How to Run an Experiment
+1. Navigate to the root directory of this repository on your local machine.
+2. Run the `main.py` script with the desired number of rounds and the path to the chosen JSON file. For example, to run the main setup (`experiment_1.json`) for `400` rounds, you would use the following command:
+   
+```
+python main.py rounds=400 experiments/experiment_1.json
+```
+
+Replace `experiment_1.json` with the name of the desired JSON file to run different variations.
+
+By running different experiments, you can explore how changes in the initial setup affect the efficiency and effectiveness of the task-sharing strategies in the simulation.
