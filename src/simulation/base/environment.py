@@ -1,15 +1,18 @@
 from abc import ABC, abstractmethod
 from src.simulation.base.grid import Grid, Agent
 from src.simulation.base.intentions import Intention
-from src.simulation.base.item import Item, ItemStatus
+from src.simulation.environments.broker import Broker
 from src.utils import logging_utils
+from src.simulation.base.item import Item, ItemStatus
 import random
 
 # setup logger
 logger = logging_utils.setup_logger('EnvironmentLogger', 'environment.log')
 
+
 def generate_items(pickup_station, delivery_station, created_tick, max_items):
     logger.info(f"Generating items for pickup station {pickup_station.id} and delivery station {delivery_station.id}")
+    print(f"Generating items for pickup station {pickup_station.id} and delivery station {delivery_station.id}")
     num_items = random.randint(1, max_items)
     for _ in range(num_items):
         item = Item(
@@ -20,11 +23,14 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
         )
         pickup_station.items.append(item)
     logger.info(f"{num_items} items added to pickup station {pickup_station.id}")
+    print(f"{num_items} items added to pickup station {pickup_station.id}")
+
 
 def _get_intentions(state: Grid) -> list[Intention]:
     list_of_intentions = []
     for agent in state.agents:
-        list_of_intentions.append(agent.make_intention(state))
+        if agent.is_assigned_item or agent.is_carrying_item:
+            list_of_intentions.append(agent.make_intention(state))
     return list_of_intentions
 
 
@@ -50,6 +56,9 @@ class Environment(ABC):
         """Iteratively process all intentions in the state, until all agents had their Intention enacted. An important
         assumption is that the number of inconsistent operations ALWAYS eventually falls to 0, as in the conflict
         situation, the Environment will always prefer one of them and realise its wish."""
+
+        broker = Broker(state)
+        broker.assign_items_to_agents()
 
         new_intentions = _get_intentions(state)
 

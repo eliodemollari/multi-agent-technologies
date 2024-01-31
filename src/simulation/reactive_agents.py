@@ -18,6 +18,10 @@ class TopCongestionAgent(Agent):
     def is_carrying_item(self) -> bool:
         return any(item.status == ItemStatus.IN_TRANSIT for item in self.items)
 
+    @property
+    def is_assigned_item(self) -> bool:
+        return any(item.status == ItemStatus.ASSIGNED_TO_AGENT for item in self.items)
+
     def get_carried_item(self) -> Any | None:
         for item in self.items:
             if item.status == ItemStatus.IN_TRANSIT:
@@ -47,7 +51,8 @@ class TopCongestionAgent(Agent):
 
             # If the agent carrying on an item and is on a DeliveryStation, deliver the item
             if destination_station_position == self.position:
-                logger.info(f"Agent {self.id} is delivering an item")  # log info message
+                logger.info(f"Agent {self.id} is delivering item {item_to_deliver.id}")  # log info message
+                print(f"Agent {self.id} is delivering item {item_to_deliver.id}")
                 return Deliver(self.id)
             # If the agent is carrying an item and is not on a DeliveryStation, move towards the destination
             else:
@@ -60,18 +65,28 @@ class TopCongestionAgent(Agent):
                     item_to_deliver.destination
                 )
                 # ... existing code to find the path to the target station ...
-                logger.info(f"Agent {self.id} is moving towards the target station")  # log info message
+                logger.info(f"Agent {self.id} is moving towards the target station position in "
+                            f"{destination_station_position}")
+                print(f"Agent {self.id} is moving towards the target station position in {destination_station_position}")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))
 
         # When Agent is not carrying an item
         else:
-            # If the agent is not carrying an item and is on a PickupStation, pick up an item
-            target_station = grid.get_most_crowded_pickup_station()
-            target_station_position = target_station.position
+            # If the agent is not carrying an item and is on a PickupStation, pick up the item assigned to the agent
+            # target_station = grid.get_most_crowded_pickup_station()
+            # target_station_position = target_station.position
+
+            # Filter the item in agent items list that has status assigned_to_agent
+            item_to_pickup = next((item for item in self.items if item.status is ItemStatus.ASSIGNED_TO_AGENT), None)
+
+            target_station_position = item_to_pickup.source.position
+
             if target_station_position == self.position:
-                logger.info(f"Agent {self.id} is picking up an item")  # log info message
-                item = target_station.items[0]
-                return Pickup(self.id, item.id)
+                logger.info(f"Agent {self.id} is picking up an item at the pickup station position in "
+                            f"{target_station_position}")
+                print(f"Agent {self.id} is picking up an item at the pickup station "
+                      f"position in {target_station_position}")
+                return Pickup(self.id, item_to_pickup.id)
             # If the agent is not carrying an item and is not on a PickupStation, move towards the target station
             else:
                 next_node = find_shortest_path(
@@ -83,4 +98,5 @@ class TopCongestionAgent(Agent):
                     target_station_position
                 )
                 logger.info(f"Agent {self.id} is moving towards the target station")  # log info message
+                print(f"Agent {self.id} is moving towards the target station")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))

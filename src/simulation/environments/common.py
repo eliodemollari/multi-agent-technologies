@@ -4,6 +4,7 @@ from collections import defaultdict
 from src.simulation.base.grid import Grid, InvalidGrid, PickupStation
 from src.simulation.base.intentions import Move, Intention, Pickup
 
+
 class IllegalIntention(Exception):
     pass
 

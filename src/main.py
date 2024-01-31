@@ -6,7 +6,6 @@ from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupS
 from src.simulation.base.item import ItemStatus, Item
 from src.simulation.environments.top_congestion_environment import TopCongestionEnvironment
 from src.simulation.reactive_agents import TopCongestionAgent
-from src.simulation.simulation import display_grid
 
 
 def average_delivery_time_per_step(environment: Environment) -> None:

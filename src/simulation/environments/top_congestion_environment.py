@@ -22,6 +22,7 @@ def get_item_index_by_id(items_list, item_id):
     # If no item with the matching id is found, return None
     return None
 
+
 def check_for_collisions_with_obstacles(intentions: list[Intention], state: Grid) -> None:
     move_intentions = filter(lambda intention: isinstance(intention, Move), intentions)
 
@@ -127,11 +128,14 @@ def _enact_pickup_intention(pickup_intention: Pickup, state: Grid, tick: int) ->
     except IndexError:
         raise IllegalPickup(f"Agent {pickup_intention.agent_id} tried to pick up an item that is not in the pickup "
                             f"station")
+    # item.status = ItemStatus.IN_TRANSIT
     item.set_status(ItemStatus.IN_TRANSIT, tick)
     logger.info(f"Item {item} picked up by agent {pickup_intention.agent_id}")
     print(f"Item {item} picked up by agent {pickup_intention.agent_id}")
-    agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
-    state.agents[agent_index].items.append(item)
+
+    # Not needed in brokering because the item is already assigned to the agent
+    # agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
+    # state.agents[agent_index].items.append(item)
 
     return state
 
