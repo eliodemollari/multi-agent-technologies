@@ -9,7 +9,14 @@ class Broker:
     def __init__(self, state: Grid):
         self.state = state
         self.items = self._get_all_items()
+        self.items_available_for_auction = self._get_all_items_available_for_auction()
         self.agents = state.agents
+
+    def announce_items(self):
+        bids = []
+        for agent in self.agents:
+            bids.append(agent.receive_auction_information(self.items_available_for_auction, self.state))
+        return bids
 
     def assign_items_to_agents(self):
         logger.info("Assigning items to agents")
@@ -32,6 +39,10 @@ class Broker:
 
     def _get_all_items(self):
         all_items = [item for station in self.state.pickup_stations for item in station.items]
+        return all_items
+
+    def _get_all_items_available_for_auction(self):
+        all_items = [item for station in self.state.pickup_stations for item in station.items if item.status == ItemStatus.AWAITING_PICKUP]
         return all_items
 
     @staticmethod
