@@ -50,10 +50,11 @@ class PickupStation(BoardObject, ABC):
 
 
 class Agent(BoardObject, ABC):
-    def __init__(self, position: tuple[int, int]):
+    def __init__(self, position: tuple[int, int], capacity: int = 1):
         super().__init__()
         self.set_position(position)
         self.items = []
+        self.capacity = capacity
 
     @abstractmethod
     def make_intention(self, grid: 'Grid') -> Intention:
@@ -62,6 +63,7 @@ class Agent(BoardObject, ABC):
 
 class Grid:
     def __init__(self, board: list[list[list[BoardObject]]],
+                 grid_size: [int, int],
                  pickup_stations: list[PickupStation] = None,
                  delivery_stations: list[DeliveryStation] = None,
                  obstacles: list[Obstacle] = None,
@@ -71,6 +73,7 @@ class Grid:
         self.obstacles = obstacles if obstacles is not None else []
         self.agents = agents if agents is not None else []
         self.board = board
+        self.grid_size = grid_size
 
     def board_dimensions(self) -> tuple[int, int]:
         return len(self.board), len(self.board[0])

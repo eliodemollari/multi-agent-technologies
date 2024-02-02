@@ -63,7 +63,7 @@ def setup_simulation(config) -> Environment:
     # Initialize the Grid
     grid_size = config['grid_size']
     board = create_empty_board(grid_size[0], grid_size[1])
-    grid = Grid(board)
+    grid = Grid(board, grid_size)
 
     # Initialize Obstacles
     for obstacle_coords in config['obstacles']:
