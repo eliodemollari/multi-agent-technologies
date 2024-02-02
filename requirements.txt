@@ -1,3 +1,4 @@
 matplotlib
 pathfinding
 uuid
+itertools
