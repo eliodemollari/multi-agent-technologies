@@ -11,7 +11,7 @@ class TestItemLogging(unittest.TestCase):
         self.logger = logging_utils.setup_logger('ItemLogger', self.log_file)
 
     def test_item_creation_logs_message(self):
-        item = Item(1, 1, 2, ItemStatus.AWAITING_PICKUP)
+        Item(1, 1, 2, ItemStatus.AWAITING_PICKUP)
         with open(self.log_file, 'r') as f:
             log_messages = f.readlines()
         self.assertGreater(len(log_messages), 0)
@@ -30,7 +30,3 @@ class TestLoggingUtils(unittest.TestCase):
         self.assertEqual(len(self.logger.handlers), 1)
         self.assertIsInstance(self.logger.handlers[0], logging.FileHandler)
         self.assertEqual(self.logger.handlers[0].baseFilename, self.log_file)
-
-
-if __name__ == '__main__':
-    unittest.main()

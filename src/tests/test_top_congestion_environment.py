@@ -13,8 +13,9 @@ from src.simulation.reactive_agents import TopCongestionAgent
 
 class TestTopCongestionEnvironment(unittest.TestCase):
     def test_check_for_collisions_with_obstacles(self):
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((2, 3))
@@ -36,8 +37,9 @@ class TestTopCongestionEnvironment(unittest.TestCase):
             check_for_collisions_with_obstacles([move_intention], self.grid)
 
     def test_check_for_pickups_from_outside_station(self):
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((1, 0))
@@ -58,8 +60,9 @@ class TestTopCongestionEnvironment(unittest.TestCase):
             check_for_pickups_from_outside_station(illegal_intention, self.grid)
 
     def test_check_for_deliveries_from_outside_station(self):
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((1, 0))
@@ -80,8 +83,9 @@ class TestTopCongestionEnvironment(unittest.TestCase):
             check_for_deliveries_from_outside_station(illegal_intention, self.grid)
 
     def test_check_if_intentions_come_from_unique_agents(self):
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((1, 0))
@@ -105,8 +109,9 @@ class TestTopCongestionEnvironment(unittest.TestCase):
             check_if_intentions_come_from_unique_agents(illegal_intentions)
 
     def test_conflicts_for_same_item(self):
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent_1 = TopCongestionAgent((1, 1))
@@ -142,8 +147,9 @@ class TestTopCongestionEnvironment(unittest.TestCase):
 
     def test_enact_pickup_intention(self):
         """Test that enact_pickup_intention picks up the item"""
-        self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        self.board = [[[] for _ in range(11)] for _ in range(11)]
+        grid_size = [11, 11]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((1, 1))
