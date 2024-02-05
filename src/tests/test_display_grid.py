@@ -10,7 +10,8 @@ from src.simulation.simulation import display_grid
 class TestDisplayGrid(unittest.TestCase):
     def setUp(self):
         board = [[[] for _ in range(10)] for _ in range(10)]  # Create a 10x10 board of empty cells
-        self.test_grid = Grid(board)
+        grid_size = [10, 10]
+        self.test_grid = Grid(board, grid_size)
 
         pickup_station = PickupStation((1, 1))
         delivery_station = DeliveryStation((2, 2))

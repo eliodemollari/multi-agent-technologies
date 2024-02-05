@@ -9,7 +9,8 @@ from src.simulation.reactive_agents import TopCongestionAgent
 class TestTopCongestionAgent(unittest.TestCase):
     def setUp(self):
         self.board = [[[] for _ in range(10)] for _ in range(10)]
-        self.grid = Grid(self.board)
+        grid_size = [10, 10]
+        self.grid = Grid(self.board, grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((0, 0))
@@ -33,7 +34,14 @@ class TestTopCongestionAgent(unittest.TestCase):
         # Test scenario where agent is not carrying an item and is on a PickupStation
         # Add items to pickup stations
         for _ in range(5):
-            self.pickup_station.items.append(Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=self.pickup_station, destination=self.delivery_station))
+            self.pickup_station.items.append(
+                Item(
+                    status=ItemStatus.AWAITING_PICKUP,
+                    created_tick=0,
+                    source=self.pickup_station,
+                    destination=self.delivery_station
+                )
+            )
 
         # Agent on pickup station
         self.pickup_station.set_position((0, 0))
@@ -46,14 +54,12 @@ class TestTopCongestionAgent(unittest.TestCase):
         # Add items to pickup stations
         for _ in range(5):
             self.pickup_station.items.append(
-                Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=self.pickup_station,
-                     destination=self.delivery_station))
+                Item(status=ItemStatus.AWAITING_PICKUP,
+                     created_tick=0,
+                     source=self.pickup_station,
+                     destination=self.delivery_station
+                     )
+            )
 
         intention = self.agent.make_intention(self.grid)
         self.assertIsInstance(intention, Move)
-
-    # Additional tests can be added for different scenarios
-
-
-if __name__ == '__main__':
-    unittest.main()
