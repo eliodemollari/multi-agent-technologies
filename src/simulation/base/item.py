@@ -23,6 +23,7 @@ class Item:
         self.pickup_tick = None
         self.delivered_tick = None
         self.agent_id = None
+        self.priority = None
         self.source = source
         self.destination = destination
         self.status = status

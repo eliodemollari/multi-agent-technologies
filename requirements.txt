@@ -1,4 +1,3 @@
 matplotlib
 pathfinding
 uuid
-itertools

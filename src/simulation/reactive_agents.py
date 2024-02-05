@@ -71,7 +71,7 @@ class TopCongestionAgent(Agent):
             current_position = next_node.source.position
 
             # Add the visited node to the list
-            visited_nodes.append(next_node.source.position)
+            visited_nodes.append(next_node)
 
         return visited_nodes, total_path_length
 
@@ -84,7 +84,8 @@ class TopCongestionAgent(Agent):
                     visited_nodes, total_path_length = self.agent_tsp_solution(subset, state)
                     obj = {
                         "ordered_bundle": visited_nodes,
-                        "costs": total_path_length
+                        "costs": total_path_length,
+                        "agent": self
                     }
                     bundle.append(obj)
         return bundle

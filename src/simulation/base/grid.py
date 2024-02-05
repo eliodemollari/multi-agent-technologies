@@ -55,6 +55,7 @@ class Agent(BoardObject, ABC):
         self.set_position(position)
         self.items = []
         self.capacity = capacity
+        self.total_cost = 0
 
     @abstractmethod
     def make_intention(self, grid: 'Grid') -> Intention:
