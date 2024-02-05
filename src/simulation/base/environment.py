@@ -13,8 +13,7 @@ logger = logging_utils.setup_logger('EnvironmentLogger', 'environment.log')
 def generate_items(pickup_station, delivery_station, created_tick, max_items):
     logger.info(f"Generating items for pickup station {pickup_station.id} and delivery station {delivery_station.id}")
     print(f"Generating items for pickup station {pickup_station.id} and delivery station {delivery_station.id}")
-    num_items = random.randint(1, max_items)
-    for _ in range(num_items):
+    for _ in range(max_items):
         item = Item(
             status=ItemStatus.AWAITING_PICKUP,
             created_tick=created_tick,
@@ -22,8 +21,8 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
             destination=delivery_station
         )
         pickup_station.items.append(item)
-    logger.info(f"{num_items} items added to pickup station {pickup_station.id}")
-    print(f"{num_items} items added to pickup station {pickup_station.id}")
+    logger.info(f"{max_items} items added to pickup station {pickup_station.id}")
+    print(f"{max_items} items added to pickup station {pickup_station.id}")
 
 
 def _get_intentions(state: Grid) -> list[Intention]:
@@ -78,17 +77,16 @@ class Environment(ABC):
     def simulation_step(self) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
-        if self.items_added < 50:
+        if self.items_added < 5 and self.tick != 0:
             random_pickup_station = random.randint(0, len(self.state.pickup_stations) - 1)
             random_delivery_station = random.randint(0, len(self.state.delivery_stations) - 1)
             generate_items(self.state.pickup_stations[random_pickup_station],
-                           self.state.delivery_stations[random_delivery_station], self.tick, 1)
+                           self.state.delivery_stations[random_delivery_station], self.tick, 2)
             self.items_added += 1
         self.state = self._process_intentions(self.state, self.tick)
-        self.tick += 1
-
         logger.info(f"Simulation step completed at tick {self.tick}")
         print(f"Simulation step completed at tick {self.tick}")
         print('-------------------------------------------------------------------------------------------')
+        self.tick += 1
 
         return self.state

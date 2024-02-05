@@ -1,5 +1,6 @@
 import argparse
 import json
+import random
 
 from src.simulation.base.environment import Environment
 from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupStation, DeliveryStation
@@ -45,12 +46,20 @@ def agent_efficiency(environment: Environment, total_ticks: int) -> None:
     print(f"Agent efficiencies: {efficiencies}")
 
 
+def agent_total_costs(environment: Environment) -> None:
+    """Calculate the total cost of each agent"""
+    agents = environment.state.agents
+    costs = {agent_id: agent.total_cost for agent_id, agent in enumerate(agents)}
+    print(f"Agent total costs: {costs}")
+
+
 def analyze_results(environment: Environment) -> None:
     average_delivery_time_per_step(environment)
     total_items_delivered(environment)
     total_items_awaiting_pickup(environment)
     total_items_in_transit(environment)
     agent_efficiency(environment, environment.tick)
+    agent_total_costs(environment)
 
 
 def read_config(file_path):
@@ -81,7 +90,7 @@ def setup_simulation(config) -> Environment:
         grid.add_board_object(delivery_station)
 
     for agent_coords in config['agents']:
-        agent = TopCongestionAgent(agent_coords)
+        agent = TopCongestionAgent(agent_coords, 3)
         grid.add_board_object(agent)
 
     for pickup_station in grid.pickup_stations:
