@@ -41,6 +41,10 @@ class TopCongestionAgent(Agent):
     def current_capacity(self) -> int:
         return self.capacity - self.number_of_items_in_transit - self.number_of_items_assigned_to_agent
 
+    @property
+    def no_more_items_to_pickup(self) -> bool:
+        return not any(item.status == ItemStatus.ASSIGNED_TO_AGENT for item in self.items)
+
     def agent_tsp_solution(self, bundle, state: Grid):
         bundle = list(bundle)
         paths_to_items = []
@@ -90,11 +94,9 @@ class TopCongestionAgent(Agent):
                     bundle.append(obj)
         return bundle
 
-    def get_carried_item(self) -> Any | None:
-        for item in self.items:
-            if item.status == ItemStatus.IN_TRANSIT:
-                return item
-        return None
+    def get_carried_items(self) -> Any | None:
+        items_in_transit = [item for item in self.items if item.status == ItemStatus.IN_TRANSIT]
+        return items_in_transit
 
     def is_on_pickup_station(self, grid: Grid) -> PickupStation | None:
         for pickup_station in grid.pickup_stations:
@@ -112,59 +114,50 @@ class TopCongestionAgent(Agent):
         return None
 
     def make_intention(self, grid: Grid) -> Intention:
-        # When Agent is carrying an item
-        if self.is_carrying_item:
-            item_to_deliver = self.get_carried_item()
-            destination_station_position = item_to_deliver.destination.position
+        if self.no_more_items_to_pickup:
+            items_in_transit = self.get_carried_items()
+
+            # Sort the items based on their priority in ascending order
+            sorted_items = sorted(items_in_transit, key=lambda item: item.priority)
+
+            # The item with the highest priority will be at the beginning of the list
+            highest_priority_item = sorted_items[0]
+            destination_station_position = highest_priority_item.destination.position
 
             # If the agent carrying on an item and is on a DeliveryStation, deliver the item
             if destination_station_position == self.position:
-                logger.info(f"Agent {self.id} is delivering item {item_to_deliver.id}")  # log info message
-                print(f"Agent {self.id} is delivering item {item_to_deliver.id}")
+                logger.info(f"Agent {self.id} is delivering item {highest_priority_item.id}")  # log info message
+                print(f"Agent {self.id} is delivering item {highest_priority_item.id}")
                 return Deliver(self.id)
             # If the agent is carrying an item and is not on a DeliveryStation, move towards the destination
             else:
-                next_node = find_shortest_path(
-                    grid,
-                    grid.board_dimensions(),
-                    grid.obstacles, self.position,
-                    destination_station_position,
-                    item_to_deliver.source,
-                    item_to_deliver.destination
-                )
+                next_node = find_shortest_path(grid, self.position, destination_station_position)
                 # ... existing code to find the path to the target station ...
-                logger.info(f"Agent {self.id} is moving towards the target station position in "
-                            f"{destination_station_position}")
-                print(f"Agent {self.id} is moving towards the target station position in {destination_station_position}")
+                logger.info(f"Agent {self.id} is moving towards the DS position in {destination_station_position}")
+                print(f"Agent {self.id} is moving towards the DS position in {destination_station_position}")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))
 
-        # When Agent is not carrying an item
+        # If there are still items to pick up
         else:
-            # If the agent is not carrying an item and is on a PickupStation, pick up the item assigned to the agent
-            # target_station = grid.get_most_crowded_pickup_station()
-            # target_station_position = target_station.position
+            items_assigned = [item for item in self.items if item.status == ItemStatus.ASSIGNED_TO_AGENT]
 
-            # Filter the item in agent items list that has status assigned_to_agent
-            item_to_pickup = next((item for item in self.items if item.status is ItemStatus.ASSIGNED_TO_AGENT), None)
+            # Sort the items based on their priority in ascending order
+            sorted_items = sorted(items_assigned, key=lambda item: item.priority)
 
-            target_station_position = item_to_pickup.source.position
+            # The item with the highest priority will be at the beginning of the list
+            highest_priority_item = sorted_items[0]
+            target_station_position = highest_priority_item.source.position
 
+            # If agent on a PickupStation of an assigned item, pick up the item
             if target_station_position == self.position:
                 logger.info(f"Agent {self.id} is picking up an item at the pickup station position in "
                             f"{target_station_position}")
                 print(f"Agent {self.id} is picking up an item at the pickup station "
                       f"position in {target_station_position}")
-                return Pickup(self.id, item_to_pickup.id)
-            # If the agent is not carrying an item and is not on a PickupStation, move towards the target station
+                return Pickup(self.id, highest_priority_item.id)
+            # If the agent is not on a PickupStation of an assigned, move towards the target station
             else:
-                next_node = find_shortest_path(
-                    grid,
-                    grid.board_dimensions(),
-                    grid.obstacles,
-                    self.position,
-                    target_station_position,
-                    target_station_position
-                )
+                next_node = find_shortest_path(grid, self.position, target_station_position)
                 logger.info(f"Agent {self.id} is moving towards the target station")  # log info message
                 print(f"Agent {self.id} is moving towards the target station")
                 return Move(self.id, (next_node[0] - self.position[0], next_node[1] - self.position[1]))
