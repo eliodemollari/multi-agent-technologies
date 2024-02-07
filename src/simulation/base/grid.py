@@ -58,7 +58,7 @@ class Agent(BoardObject, ABC):
         self.total_cost = 0
 
     @abstractmethod
-    def make_intention(self, grid: 'Grid') -> Intention:
+    def make_intention(self, grid: 'Grid', selfishness: bool) -> Intention:
         pass
 
 

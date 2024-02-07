@@ -76,7 +76,7 @@ class Environment(ABC):
 
         return state
 
-    def simulation_step(self) -> Grid:
+    def simulation_step(self, selfishness: bool) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
         # Initialize counters for pickup and delivery stations
@@ -96,7 +96,7 @@ class Environment(ABC):
             # Update the counters
             self.pickup_station_counter = (self.pickup_station_counter + 1) % len(self.state.pickup_stations)
             self.delivery_station_counter = (self.delivery_station_counter + 1) % len(self.state.delivery_stations)
-        self.state = self._process_intentions(self.state, self.tick)
+        self.state = self._process_intentions(self.state, self.tick, selfishness)
         logger.info(f"Simulation step completed at tick {self.tick}")
         print(f"Simulation step completed at tick {self.tick}")
         print('-------------------------------------------------------------------------------------------')
