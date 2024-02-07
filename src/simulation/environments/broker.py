@@ -31,21 +31,25 @@ class Broker:
         flat_data_bids = [item for sublist in self.bids for item in sublist]
 
         # Generate all combinations of bids
-        bid_combinations = [combo for r in range(1, len(flat_data_bids) + 1) for combo in
-                            itertools.combinations(flat_data_bids, r)]
+        bid_combinations = []
+        for r in range(1, len(flat_data_bids) + 1):
+            for combo in itertools.combinations(flat_data_bids, r):
+                agent_set = set()
+                for bid in combo:
+                    agent = bid['agent']
+                    if agent in agent_set:
+                        break
+                    agent_set.add(agent)
+                else:  # This else clause executes when the for loop completes normally (no break statement encountered)
+                    bid_combinations.append(combo)
 
         # Filter combinations to those that include all items exactly once
         valid_combinations = []
         for combo in bid_combinations:
             items = []
-            agent_set = set()
             for bid in combo:
                 items += bid['ordered_bundle']
-                agent = bid['agent']
-                if agent in agent_set:
-                    break
-                agent_set.add(agent)
-            if set(items) == set(self.items_available_for_auction) and len(items) == len(set(items)):
+            if set(items) <= set(self.items_available_for_auction) and len(items) == len(set(items)):
                 valid_combinations.append(combo)
 
         # Find the combination with the lowest total cost
