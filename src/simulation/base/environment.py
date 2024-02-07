@@ -38,6 +38,8 @@ class Environment(ABC):
         self.state = state
         self.tick = 0
         self.items_added = 0
+        self.pickup_station_counter = 0
+        self.delivery_station_counter = 0
 
     @abstractmethod
     def _illegal_intentions(self, intentions: list[Intention], state: Grid) -> None:
@@ -77,12 +79,23 @@ class Environment(ABC):
     def simulation_step(self) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
-        if self.items_added < 5 and self.tick != 0:
-            random_pickup_station = random.randint(0, len(self.state.pickup_stations) - 1)
-            random_delivery_station = random.randint(0, len(self.state.delivery_stations) - 1)
-            generate_items(self.state.pickup_stations[random_pickup_station],
-                           self.state.delivery_stations[random_delivery_station], self.tick, 2)
+        # Initialize counters for pickup and delivery stations
+        self.pickup_station_counter = 0
+        self.delivery_station_counter = 0
+
+        # In your simulation_step method
+        if self.items_added < 20 and self.tick != 0:
+            # Use the counters to select the stations
+            pickup_station = self.state.pickup_stations[self.pickup_station_counter]
+            delivery_station = self.state.delivery_stations[self.delivery_station_counter]
+
+            # Generate the items
+            generate_items(pickup_station, delivery_station, self.tick, 1)
             self.items_added += 1
+
+            # Update the counters
+            self.pickup_station_counter = (self.pickup_station_counter + 1) % len(self.state.pickup_stations)
+            self.delivery_station_counter = (self.delivery_station_counter + 1) % len(self.state.delivery_stations)
         self.state = self._process_intentions(self.state, self.tick)
         logger.info(f"Simulation step completed at tick {self.tick}")
         print(f"Simulation step completed at tick {self.tick}")
