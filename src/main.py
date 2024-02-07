@@ -94,7 +94,7 @@ def setup_simulation(config) -> Environment:
         grid.add_board_object(agent)
 
     for pickup_station in grid.pickup_stations:
-        for i in range(2):
+        for i in range(1):
             pickup_station.items.append(
                 Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=pickup_station,
                      destination=grid.delivery_stations[i]))
