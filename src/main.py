@@ -94,7 +94,7 @@ def setup_simulation(config) -> Environment:
         grid.add_board_object(agent)
 
     for pickup_station in grid.pickup_stations:
-        for i in range(2):
+        for i in range(1):
             pickup_station.items.append(
                 Item(status=ItemStatus.AWAITING_PICKUP, created_tick=0, source=pickup_station,
                      destination=grid.delivery_stations[i]))
@@ -102,9 +102,9 @@ def setup_simulation(config) -> Environment:
     return TopCongestionEnvironment(grid)
 
 
-def run_simulation(environment: Environment, rounds: int) -> Environment:
+def run_simulation(environment: Environment, rounds: int, selfishness: bool) -> Environment:
     for i in range(rounds):
-        environment.simulation_step()
+        environment.simulation_step(selfishness)
     # display_grid(environment.state)
 
     return environment
@@ -113,7 +113,7 @@ def run_simulation(environment: Environment, rounds: int) -> Environment:
 def main(args):
     config = read_config(args.config_file)
     environment = setup_simulation(config)
-    environment = run_simulation(environment, args.rounds)
+    environment = run_simulation(environment, args.rounds, args.selfishness)
     analyze_results(environment)
 
 
@@ -122,6 +122,7 @@ if __name__ == '__main__':
     parser.add_argument('config_file', help="Path to the configuration JSON file.")
     parser.add_argument('--display', action='store_true', help="Display the grid after each step of the simulation.")
     parser.add_argument('--rounds', type=int, default=100, help="Number of simulation steps to run.")
+    parser.add_argument('--selfishness', type=bool, help="Whether the agents should act selfishly or not.")
     args = parser.parse_args()
 
     main(args)

@@ -25,11 +25,11 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
     print(f"{max_items} items added to pickup station {pickup_station.id}")
 
 
-def _get_intentions(state: Grid) -> list[Intention]:
+def _get_intentions(state: Grid, selfishness: bool) -> list[Intention]:
     list_of_intentions = []
     for agent in state.agents:
         if agent.is_assigned_item or agent.is_carrying_item:
-            list_of_intentions.append(agent.make_intention(state))
+            list_of_intentions.append(agent.make_intention(state, selfishness))
     return list_of_intentions
 
 
@@ -38,6 +38,8 @@ class Environment(ABC):
         self.state = state
         self.tick = 0
         self.items_added = 0
+        self.pickup_station_counter = 0
+        self.delivery_station_counter = 0
 
     @abstractmethod
     def _illegal_intentions(self, intentions: list[Intention], state: Grid) -> None:
@@ -51,7 +53,7 @@ class Environment(ABC):
     def _enact_valid_intentions(self, consistent_intentions: list[Intention], state: Grid, tick: int) -> Grid:
         pass
 
-    def _process_intentions(self, state: Grid, tick: int) -> Grid:
+    def _process_intentions(self, state: Grid, tick: int, selfishness: bool) -> Grid:
         """Iteratively process all intentions in the state, until all agents had their Intention enacted. An important
         assumption is that the number of inconsistent operations ALWAYS eventually falls to 0, as in the conflict
         situation, the Environment will always prefer one of them and realise its wish."""
@@ -59,7 +61,7 @@ class Environment(ABC):
         broker = Broker(state)
         broker.assign_items_to_agents()
 
-        new_intentions = _get_intentions(state)
+        new_intentions = _get_intentions(state, selfishness)
 
         try:
             self._illegal_intentions(new_intentions, state)
@@ -74,16 +76,27 @@ class Environment(ABC):
 
         return state
 
-    def simulation_step(self) -> Grid:
+    def simulation_step(self, selfishness: bool) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
-        if self.items_added < 5 and self.tick != 0:
-            random_pickup_station = random.randint(0, len(self.state.pickup_stations) - 1)
-            random_delivery_station = random.randint(0, len(self.state.delivery_stations) - 1)
-            generate_items(self.state.pickup_stations[random_pickup_station],
-                           self.state.delivery_stations[random_delivery_station], self.tick, 2)
+        # Initialize counters for pickup and delivery stations
+        self.pickup_station_counter = 0
+        self.delivery_station_counter = 0
+
+        # In your simulation_step method
+        if self.items_added < 35 and self.tick != 0:
+            # Use the counters to select the stations
+            pickup_station = self.state.pickup_stations[self.pickup_station_counter]
+            delivery_station = self.state.delivery_stations[self.delivery_station_counter]
+
+            # Generate the items
+            generate_items(pickup_station, delivery_station, self.tick, 1)
             self.items_added += 1
-        self.state = self._process_intentions(self.state, self.tick)
+
+            # Update the counters
+            self.pickup_station_counter = (self.pickup_station_counter + 1) % len(self.state.pickup_stations)
+            self.delivery_station_counter = (self.delivery_station_counter + 1) % len(self.state.delivery_stations)
+        self.state = self._process_intentions(self.state, self.tick, selfishness)
         logger.info(f"Simulation step completed at tick {self.tick}")
         print(f"Simulation step completed at tick {self.tick}")
         print('-------------------------------------------------------------------------------------------')

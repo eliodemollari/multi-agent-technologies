@@ -102,14 +102,22 @@ def _enact_deliver_intention(deliver_intention: Deliver, state: Grid, tick: int)
     agent_index = state.get_agent_index_by_id(deliver_intention.agent_id)
     agent = state.agents[agent_index]
     try:
-        item_to_deliver = next((item for item in agent.items if item.status is ItemStatus.IN_TRANSIT))
+        item_to_deliver = next((item for item in agent.items if item.id == deliver_intention.item_id), None)
     except StopIteration:
         raise IllegalDelivery(f"Agent {deliver_intention.agent_id} tried to deliver an item that it does not have")
 
     # Change the item's status. It is not actually dropped to the delivery station.
     item_to_deliver.set_status(ItemStatus.DELIVERED, tick)
-    logger.info(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
-    print(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
+    # Check in winner_bids of agent if all the items in the ordered_bundle have been delivered
+    # If so, pay the agent with the costs specified in the winner_bid
+    for winner_bid in agent.winner_bids:
+        ### First find the bid that contains the item
+        if item_to_deliver in winner_bid['ordered_bundle']:
+            if all(item.status == ItemStatus.DELIVERED for item in winner_bid['ordered_bundle']):
+                agent.total_cost += winner_bid['costs']
+
+    logger.info(f"Item {item_to_deliver.id} delivered by agent {deliver_intention.agent_id}")
+    print(f"Item {item_to_deliver.id} delivered by agent {deliver_intention.agent_id}")
 
     return state
 
