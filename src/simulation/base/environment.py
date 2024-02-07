@@ -25,11 +25,11 @@ def generate_items(pickup_station, delivery_station, created_tick, max_items):
     print(f"{max_items} items added to pickup station {pickup_station.id}")
 
 
-def _get_intentions(state: Grid) -> list[Intention]:
+def _get_intentions(state: Grid, selfishness: bool) -> list[Intention]:
     list_of_intentions = []
     for agent in state.agents:
         if agent.is_assigned_item or agent.is_carrying_item:
-            list_of_intentions.append(agent.make_intention(state))
+            list_of_intentions.append(agent.make_intention(state, selfishness))
     return list_of_intentions
 
 
@@ -53,7 +53,7 @@ class Environment(ABC):
     def _enact_valid_intentions(self, consistent_intentions: list[Intention], state: Grid, tick: int) -> Grid:
         pass
 
-    def _process_intentions(self, state: Grid, tick: int) -> Grid:
+    def _process_intentions(self, state: Grid, tick: int, selfishness: bool) -> Grid:
         """Iteratively process all intentions in the state, until all agents had their Intention enacted. An important
         assumption is that the number of inconsistent operations ALWAYS eventually falls to 0, as in the conflict
         situation, the Environment will always prefer one of them and realise its wish."""
@@ -61,7 +61,7 @@ class Environment(ABC):
         broker = Broker(state)
         broker.assign_items_to_agents()
 
-        new_intentions = _get_intentions(state)
+        new_intentions = _get_intentions(state, selfishness)
 
         try:
             self._illegal_intentions(new_intentions, state)
@@ -84,7 +84,7 @@ class Environment(ABC):
         self.delivery_station_counter = 0
 
         # In your simulation_step method
-        if self.items_added < 20 and self.tick != 0:
+        if self.items_added < 35 and self.tick != 0:
             # Use the counters to select the stations
             pickup_station = self.state.pickup_stations[self.pickup_station_counter]
             delivery_station = self.state.delivery_stations[self.delivery_station_counter]

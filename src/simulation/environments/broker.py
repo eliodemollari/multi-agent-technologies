@@ -9,10 +9,12 @@ logger = logging_utils.setup_logger('BrokerLogger', 'broker.log')
 class Broker:
     def __init__(self, state: Grid):
         self.state = state
-        self.items_available_for_auction = self._get_all_items_available_for_auction()
         self.agents = state.agents
+        self.total_agents_current_capacity = sum(agent.current_capacity for agent in self.agents)
+        self.items_available_for_auction = self._get_all_items_available_for_auction()
         self.bids = self.announce_items()
         self.winners = self.auction_winners()
+
 
     @property
     def agents_with_available_capacity(self) -> bool:
@@ -45,6 +47,7 @@ class Broker:
                 if agent in agent_set:
                     break
                 agent_set.add(agent)
+            ### In this scenario we always need to have agents with available capacity
             if set(items) == set(self.items_available_for_auction) and len(items) == len(set(items)):
                 valid_combinations.append(combo)
 
@@ -74,9 +77,7 @@ class Broker:
 
         for winner in self.winners:
             agent = winner['agent']
-            costs = winner['costs']
-            logger.info(f"Processing winner with agent id: {agent.id} and costs: {costs}")
-            agent.total_cost += costs
+            agent.winner_bids.append(winner)
             for index, item in enumerate(winner['ordered_bundle']):
                 logger.info(f"Processing item with id: {item.id} at index: {index}")
                 agent.items.append(item)
@@ -92,4 +93,10 @@ class Broker:
     def _get_all_items_available_for_auction(self):
         all_items = [item for station in self.state.pickup_stations for item in station.items if
                      item.status == ItemStatus.AWAITING_PICKUP]
-        return all_items
+        # If the number of all items is greater than the total agents' current capacity
+        if len(all_items) > self.total_agents_current_capacity:
+            # Return only as many items as the total agents' current capacity
+            return all_items[:self.total_agents_current_capacity]
+        else:
+            # If not, return all items
+            return all_items
