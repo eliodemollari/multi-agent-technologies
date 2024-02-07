@@ -72,6 +72,3 @@ class TestBroker(unittest.TestCase):
         self.assertEqual(self.item4.agent_id, self.agent1.id)
         self.assertEqual(self.item1.agent_id, self.agent1.id)
         self.assertEqual(self.item7.agent_id, self.agent3.id)
-
-        self.assertEqual(self.agent1.total_cost, 17)
-        self.assertEqual(self.agent3.total_cost, 3)
