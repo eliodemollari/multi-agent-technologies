@@ -128,7 +128,7 @@ class TopCongestionAgent(Agent):
             if destination_station_position == self.position:
                 logger.info(f"Agent {self.id} is delivering item {highest_priority_item.id}")  # log info message
                 print(f"Agent {self.id} is delivering item {highest_priority_item.id}")
-                return Deliver(self.id)
+                return Deliver(self.id, highest_priority_item.id)
             # If the agent is carrying an item and is not on a DeliveryStation, move towards the destination
             else:
                 next_node = find_shortest_path(grid, self.position, destination_station_position)
