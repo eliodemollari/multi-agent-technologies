@@ -60,11 +60,14 @@ class Broker:
         return best_combo
 
     def assign_items_to_agents(self):
-        logger.info("Starting assign_items_to_agents method")
-
-        if not self.items_available_for_auction or not self.agents_with_available_capacity:
+        if not self.items_available_for_auction:
             logger.info("No more items available for auction.")
             print("No more items available for auction.")
+            return
+
+        if not self.agents_with_available_capacity:
+            logger.info("No more agents with available capacity.")
+            print("No more agents with available capacity.")
             return
 
         logger.info("Assigning items to agents")
