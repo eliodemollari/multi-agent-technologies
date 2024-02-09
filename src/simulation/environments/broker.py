@@ -10,17 +10,15 @@ class Broker:
     def __init__(self, state: Grid):
         self.state = state
         self.agents = state.agents
-        self.max_capacity = self.total_agents_current_capacity()
+        self.total_agents_current_capacity = sum(agent.current_capacity for agent in self.agents)
         self.items_available_for_auction = self._get_all_items_available_for_auction()
         self.bids = self.announce_items()
         self.winners = self.auction_winners()
 
+
     @property
     def agents_with_available_capacity(self) -> bool:
         return any(agent.current_capacity > 0 for agent in self.agents)
-
-    def total_agents_current_capacity(self) -> int:
-        return sum(agent.current_capacity for agent in self.agents)
 
     def announce_items(self):
         bids = []
@@ -49,6 +47,7 @@ class Broker:
                 if agent in agent_set:
                     break
                 agent_set.add(agent)
+            ### In this scenario we always need to have agents with available capacity
             if set(items) == set(self.items_available_for_auction) and len(items) == len(set(items)):
                 valid_combinations.append(combo)
 
@@ -64,11 +63,14 @@ class Broker:
         return best_combo
 
     def assign_items_to_agents(self):
-        logger.info("Starting assign_items_to_agents method")
-
-        if not self.items_available_for_auction or not self.agents_with_available_capacity:
+        if not self.items_available_for_auction:
             logger.info("No more items available for auction.")
             print("No more items available for auction.")
+            return
+
+        if not self.agents_with_available_capacity:
+            logger.info("No more agents with available capacity.")
+            print("No more agents with available capacity.")
             return
 
         logger.info("Assigning items to agents")
@@ -91,5 +93,10 @@ class Broker:
     def _get_all_items_available_for_auction(self):
         all_items = [item for station in self.state.pickup_stations for item in station.items if
                      item.status == ItemStatus.AWAITING_PICKUP]
-        items_up_to_capacity = list(itertools.islice(all_items, self.max_capacity))
-        return items_up_to_capacity
+        # If the number of all items is greater than the total agents' current capacity
+        if len(all_items) > self.total_agents_current_capacity:
+            # Return only as many items as the total agents' current capacity
+            return all_items[:self.total_agents_current_capacity]
+        else:
+            # If not, return all items
+            return all_items

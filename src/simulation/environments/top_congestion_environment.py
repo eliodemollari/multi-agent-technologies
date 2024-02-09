@@ -100,7 +100,10 @@ def _enact_deliver_intention(deliver_intention: Deliver, state: Grid, tick: int)
         raise IllegalDelivery(f"Agent {deliver_intention.agent_id} tried to deliver an item that it does not have")
 
     item_to_deliver.set_status(ItemStatus.DELIVERED, tick)
+    # Check in winner_bids of agent if all the items in the ordered_bundle have been delivered
+    # If so, pay the agent with the costs specified in the winner_bid
     for winner_bid in agent.winner_bids:
+        ### First find the bid that contains the item
         if item_to_deliver in winner_bid['ordered_bundle']:
             if all(item.status == ItemStatus.DELIVERED for item in winner_bid['ordered_bundle']):
                 agent.total_cost += winner_bid['costs']
