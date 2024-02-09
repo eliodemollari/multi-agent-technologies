@@ -1,3 +1,60 @@
+# Third Assignment: Multi-agent Technologies
+The third assignment of the Multi-agent Technologies, was implemented on top of the second assignment, more specifically
+the Brokering technique. The main goal of this assignment was to implement a combinatorial auction protocol between the 
+agents and the broker (auctioneer). The combinatorial auction protocol is a type of auction in which bidders can place
+bids on combinations of items, or "packages," rather than just individual items. The protocol was implemented in the
+`master` branch. 
+
+## Combinatorial Auction Protocol
+The protocol is a two-phase protocol, where the first phase is the bidding phase and the second phase is the allocation
+of the winning bids to the agents. The broker is responsible for the management of the auction, and the agents are 
+responsible for placing bids on the items.
+
+Initially the broker checks in the system for items available for auction, and then it sends a message to all agents
+informing them of the items available for auction. The agents then place bids on the items, and the broker collects the 
+bids. After the bidding phase is over, the broker then allocates the items to the agents based on the bids placed.
+
+### Bid Determination 
+Each participant in the auction submits bids for every potential combination of items. These bids correspond to the minimum 
+costs associated with acquiring the specified set of items. For instance, in the case of agent 2, items A and B are 
+considered complementary, while items B and D are deemed substitutes due to the disproportionate costs associated with 
+acquiring them together (subadditivity principle). It's important to note that in this context, costs are represented as 
+negative utilities, where higher values indicate worse outcomes.
+
+### XOR Bids
+Participants make XOR bids, meaning that each participant can win at most one bundle. Additionally, there's an option for 
+participants to bid zero for an empty bundle, signifying no cost.
+
+### Auctioneer's Role
+The auctioneer is responsible for determining the solution that maximizes welfare and allocates one bundle (potentially 
+an empty one) to each participant. In the provided example, the optimal solution is ({A,B},{C,D}) with a welfare value 
+of C*=8. It's worth noting that the auctioneer acts as a dictator in this scenario, meaning that participants must accept 
+the allocation. This setup allows for the implementation of various social choice mechanisms simply by adjusting the optimization criteria.
+
+### Practical Considerations
+It's essential to acknowledge the practical challenges associated with solving this and similar problems. The computational 
+complexity and communication overhead can be substantial. Specifically, as the number of tasks increases, so does the 
+computational burden. Even computing a single bid, which involves planning optimal routes, can be highly complex for 
+participants. While this might be more manageable in other problem domains, the auctioneer faces the most significant 
+computational challenges, including filtering out dominated bids (a linear-time operation) and subsequently identifying 
+the best allocation (an exponential-time task due to the power set of possible assignments). These factors contribute to 
+the impracticality of certain approaches for addressing such problems.
+
+## Agents and Bids
+Each agent is responsible for placing bids on the items. The bids are placed based on the distance of the agent to the 
+pickup station and the capacity of the agent. Each bid is associated with a cost, which is the cost the system is being 
+charged for the delivery of the item (or bundle of items).
+If an agent has capacity to carry more than one item, it can place bids on multiple items. 
+The cost mechanism is based on the distance of the agent to the pickup station and agent's capacity. It costs more units 
+if the agent has smaller capacity, as it is considered a quicker and more expensive delivery. 
+
+## Selfish Agents & Non-selfish Agents
+Agents can have different strategies when placing bids. Some agents can be selfish, meaning if new items are added to the 
+system, they will place bids on the new items, even if they are already carrying an item. Other agents can be non-selfish,
+meaning they will not place bids on new items if they are already carrying an item. 
+
+
+# Second Assignment: Multi-agent Technologies
 ## Multi-agent Technologies
 
 The repository is structured as follows:

@@ -88,7 +88,7 @@ class TopCongestionAgent(Agent):
                     visited_nodes, total_path_length = self.agent_tsp_solution(subset, state)
                     obj = {
                         "ordered_bundle": visited_nodes,
-                        "costs": total_path_length,
+                        "costs": round(total_path_length / self.capacity),
                         "agent": self
                     }
                     bundle.append(obj)
@@ -113,7 +113,7 @@ class TopCongestionAgent(Agent):
                 return delivery_station
         return None
 
-    def make_intention(self, grid: Grid) -> Intention:
+    def make_intention(self, grid: Grid, selfishness) -> Intention:
         if self.no_more_items_to_pickup:
             items_in_transit = self.get_carried_items()
 
@@ -128,7 +128,7 @@ class TopCongestionAgent(Agent):
             if destination_station_position == self.position:
                 logger.info(f"Agent {self.id} is delivering item {highest_priority_item.id}")  # log info message
                 print(f"Agent {self.id} is delivering item {highest_priority_item.id}")
-                return Deliver(self.id)
+                return Deliver(self.id, highest_priority_item.id)
             # If the agent is carrying an item and is not on a DeliveryStation, move towards the destination
             else:
                 next_node = find_shortest_path(grid, self.position, destination_station_position)

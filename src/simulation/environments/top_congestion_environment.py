@@ -15,11 +15,9 @@ def get_item_index_by_id(items_list, item_id):
     # Find the index of the item with the matching id
     item_index = next((index for index, item in enumerate(items_list) if item.id == item_id), None)
 
-    # If an item with the matching id is found, return its index
     if item_index is not None:
         return item_index
 
-    # If no item with the matching id is found, return None
     return None
 
 
@@ -28,7 +26,6 @@ def check_for_collisions_with_obstacles(intentions: list[Intention], state: Grid
 
     for move_intention in move_intentions:
         new_x, new_y = find_position_after_move(move_intention, state)
-        # Check if the new position is occupied by an obstacle
         if any((isinstance(board_object, Obstacle) for board_object in state.board[new_x][new_y])):
             raise IllegalMove(f"Agent {move_intention.agent_id} tried to move into an {state.board[new_x][new_y]} "
                               f"in position {(new_x, new_y)}")
@@ -41,7 +38,6 @@ def check_for_pickups_from_outside_station(intentions: list[Intention], state: G
         agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
         agent_position = state.agents[agent_index].position
         x, y = agent_position
-        # Check if the agent is on a pickup station
         if not any((isinstance(board_object, PickupStation) for board_object in state.board[x][y])):
             raise IllegalPickup(f"Agent {pickup_intention.agent_id} tried to pick up an item from a non-pickup station")
 
@@ -53,7 +49,6 @@ def check_for_deliveries_from_outside_station(intentions: list[Intention], state
         agent_index = state.get_agent_index_by_id(deliver_intention.agent_id)
         agent_position = state.agents[agent_index].position
         x, y = agent_position
-        # Check if the agent is on a delivery station
         if not any((isinstance(board_object, DeliveryStation) for board_object in state.board[x][y])):
             raise IllegalDelivery(f"Agent {deliver_intention.agent_id} tried to deliver an item to a non-delivery "
                                   f"station")
@@ -84,7 +79,6 @@ def overflowing_pickups(grouped_intentions: dict[int, dict[int | None, list[Pick
     overflow_intentions = []
 
     for pickup_station_id, item_intentions in grouped_intentions.items():
-        # We only calculate 1 request per concrete item, as conflicting ones were rejected in the other step
         number_of_concrete_item_requests = len(item_intentions.keys()) if None not in item_intentions.keys() \
             else len(item_intentions.keys()) - 1
         pickup_station_index = state.get_pickup_station_index_by_id(pickup_station_id)
@@ -98,44 +92,40 @@ def overflowing_pickups(grouped_intentions: dict[int, dict[int | None, list[Pick
 
 
 def _enact_deliver_intention(deliver_intention: Deliver, state: Grid, tick: int) -> Grid:
-    # Find the item in the agent's inventory
     agent_index = state.get_agent_index_by_id(deliver_intention.agent_id)
     agent = state.agents[agent_index]
     try:
-        item_to_deliver = next((item for item in agent.items if item.status is ItemStatus.IN_TRANSIT))
+        item_to_deliver = next((item for item in agent.items if item.id == deliver_intention.item_id), None)
     except StopIteration:
         raise IllegalDelivery(f"Agent {deliver_intention.agent_id} tried to deliver an item that it does not have")
 
-    # Change the item's status. It is not actually dropped to the delivery station.
     item_to_deliver.set_status(ItemStatus.DELIVERED, tick)
-    logger.info(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
-    print(f"Item {item_to_deliver} delivered by agent {deliver_intention.agent_id}")
+    for winner_bid in agent.winner_bids:
+        if item_to_deliver in winner_bid['ordered_bundle']:
+            if all(item.status == ItemStatus.DELIVERED for item in winner_bid['ordered_bundle']):
+                agent.total_cost += winner_bid['costs']
+
+    logger.info(f"Item {item_to_deliver.id} delivered by agent {deliver_intention.agent_id}")
+    print(f"Item {item_to_deliver.id} delivered by agent {deliver_intention.agent_id}")
 
     return state
 
 
 def _enact_pickup_intention(pickup_intention: Pickup, state: Grid, tick: int) -> Grid:
-    # Find the agent's location and the pickup station
     agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
     agent_position = state.agents[agent_index].position
     pickup_station = next((board_object for board_object in
                            state.board[agent_position[0]][agent_position[1]]
                            if isinstance(board_object, PickupStation)))
-    # Get item index in pickup station
     item_index = get_item_index_by_id(pickup_station.items, pickup_intention.item_id)
     try:
         item = pickup_station.items.pop(item_index)
     except IndexError:
         raise IllegalPickup(f"Agent {pickup_intention.agent_id} tried to pick up an item that is not in the pickup "
                             f"station")
-    # item.status = ItemStatus.IN_TRANSIT
     item.set_status(ItemStatus.IN_TRANSIT, tick)
     logger.info(f"Item {item} picked up by agent {pickup_intention.agent_id}")
     print(f"Item {item} picked up by agent {pickup_intention.agent_id}")
-
-    # Not needed in brokering because the item is already assigned to the agent
-    # agent_index = state.get_agent_index_by_id(pickup_intention.agent_id)
-    # state.agents[agent_index].items.append(item)
 
     return state
 

@@ -56,9 +56,10 @@ class Agent(BoardObject, ABC):
         self.items = []
         self.capacity = capacity
         self.total_cost = 0
+        self.winner_bids = []
 
     @abstractmethod
-    def make_intention(self, grid: 'Grid') -> Intention:
+    def make_intention(self, grid: 'Grid', selfishness: bool) -> Intention:
         pass
 
 
