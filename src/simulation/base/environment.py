@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.simulation.base.grid import Grid, Agent
+from src.simulation.base.grid import Grid
 from src.simulation.base.intentions import Intention
 from src.simulation.environments.broker import Broker
 from src.utils import logging_utils
@@ -38,8 +38,6 @@ class Environment(ABC):
         self.state = state
         self.tick = 0
         self.items_added = 0
-        self.pickup_station_counter = 0
-        self.delivery_station_counter = 0
 
     @abstractmethod
     def _illegal_intentions(self, intentions: list[Intention], state: Grid) -> None:
@@ -79,23 +77,12 @@ class Environment(ABC):
     def simulation_step(self, selfishness: bool) -> Grid:
         print('-------------------------------------------------------------------------------------------')
         print(f"Simulation step started at tick {self.tick}")
-        # Initialize counters for pickup and delivery stations
-        self.pickup_station_counter = 0
-        self.delivery_station_counter = 0
 
-        # In your simulation_step method
-        if self.items_added < 35 and self.tick != 0:
-            # Use the counters to select the stations
-            pickup_station = self.state.pickup_stations[self.pickup_station_counter]
-            delivery_station = self.state.delivery_stations[self.delivery_station_counter]
-
-            # Generate the items
-            generate_items(pickup_station, delivery_station, self.tick, 1)
-            self.items_added += 1
-
-            # Update the counters
-            self.pickup_station_counter = (self.pickup_station_counter + 1) % len(self.state.pickup_stations)
-            self.delivery_station_counter = (self.delivery_station_counter + 1) % len(self.state.delivery_stations)
+        if self.items_added < 150 and self.tick != 0:
+            pickup_station = random.choice(self.state.pickup_stations)
+            delivery_station = random.choice(self.state.delivery_stations)
+            generate_items(pickup_station, delivery_station, self.tick, 3)
+            self.items_added += 3
         self.state = self._process_intentions(self.state, self.tick, selfishness)
         logger.info(f"Simulation step completed at tick {self.tick}")
         print(f"Simulation step completed at tick {self.tick}")

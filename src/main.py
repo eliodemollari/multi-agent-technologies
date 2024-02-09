@@ -1,6 +1,5 @@
 import argparse
 import json
-import random
 
 from src.simulation.base.environment import Environment
 from src.simulation.base.grid import Grid, Obstacle, create_empty_board, PickupStation, DeliveryStation
@@ -12,16 +11,20 @@ from src.simulation.reactive_agents import TopCongestionAgent
 def average_delivery_time_per_step(environment: Environment) -> None:
     """Calculate the average delivery time per simulation step for all delivered items"""
     agents = environment.state.agents
-    delivery_times = [item.delivered_tick - item.created_tick for agent in agents for item in agent.items if item.status == ItemStatus.DELIVERED]
+    delivery_times = [item.delivered_tick - item.created_tick for agent in agents
+                      for item in agent.items if item.status == ItemStatus.DELIVERED]
     average_delivery_time = sum(delivery_times) / len(delivery_times) if delivery_times else 0
     average_delivery_time_per_step = average_delivery_time / environment.tick if environment.tick else 0
     print(f"Average delivery time per step: {average_delivery_time_per_step}")
 
 
 def total_items_delivered(environment: Environment) -> None:
-    """Calculate the total number of items delivered by all agents"""
+    """Calculate the total number of items delivered by each agent"""
     agents = environment.state.agents
-    total_delivered = sum(1 for agent in agents for item in agent.items if item.status == ItemStatus.DELIVERED)
+    total_delivered = {}
+    for i, agent in enumerate(agents):
+        agent_items_delivered = sum(1 for item in agent.items if item.status == ItemStatus.DELIVERED)
+        total_delivered[i] = agent_items_delivered
     print(f"Total items delivered: {total_delivered}")
 
 
@@ -32,18 +35,21 @@ def total_items_awaiting_pickup(environment: Environment) -> None:
     print(f"Total items awaiting pickup: {total_awaiting_pickup}")
 
 
+def total_items_assigned_to_agents(environment: Environment) -> None:
+    """Calculate the total number of items assigned to agents at all stations"""
+    agents = environment.state.agents
+    total_items_assigned = {}
+    for i, agent in enumerate(agents):
+        agent_items_assigned = sum(1 for item in agent.items if item.status == ItemStatus.ASSIGNED_TO_AGENT)
+        total_items_assigned[i] = agent_items_assigned
+    print(f"Total items assigned to agent: {total_items_assigned}")
+
+
 def total_items_in_transit(environment: Environment) -> None:
     """Calculate the total number of items in transit"""
     agents = environment.state.agents
     total_in_transit = sum(1 for agent in agents for item in agent.items if item.status == ItemStatus.IN_TRANSIT)
     print(f"Total items in transit: {total_in_transit}")
-
-
-def agent_efficiency(environment: Environment, total_ticks: int) -> None:
-    """Calculate the efficiency of each agent as items delivered per tick"""
-    agents = environment.state.agents
-    efficiencies = {agent_id: sum(1 for item in agent.items if item.status == ItemStatus.DELIVERED) / total_ticks for agent_id, agent in enumerate(agents)}
-    print(f"Agent efficiencies: {efficiencies}")
 
 
 def agent_total_costs(environment: Environment) -> None:
@@ -53,13 +59,26 @@ def agent_total_costs(environment: Environment) -> None:
     print(f"Agent total costs: {costs}")
 
 
+def agent_total_bundle_delivered(environment: Environment) -> None:
+    """Calculate the total number of bundles delivered by each agent"""
+    agents = environment.state.agents
+    total_bundle_delivered = {}
+    for i, agent in enumerate(agents):
+        agent_bundle_delivered = 0
+        for winner in agent.winner_bids:
+            if all(item.status == ItemStatus.DELIVERED for item in winner['ordered_bundle']):
+                agent_bundle_delivered += 1
+        total_bundle_delivered[i] = agent_bundle_delivered
+    print(f"Agent total number of delivered bundles: {total_bundle_delivered}")
+
+
 def analyze_results(environment: Environment) -> None:
-    average_delivery_time_per_step(environment)
     total_items_delivered(environment)
+    total_items_assigned_to_agents(environment)
     total_items_awaiting_pickup(environment)
     total_items_in_transit(environment)
-    agent_efficiency(environment, environment.tick)
     agent_total_costs(environment)
+    agent_total_bundle_delivered(environment)
 
 
 def read_config(file_path):
@@ -105,7 +124,6 @@ def setup_simulation(config) -> Environment:
 def run_simulation(environment: Environment, rounds: int, selfishness: bool) -> Environment:
     for i in range(rounds):
         environment.simulation_step(selfishness)
-    # display_grid(environment.state)
 
     return environment
 
