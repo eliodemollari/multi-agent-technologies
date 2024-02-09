@@ -13,8 +13,8 @@ class TestBroker(unittest.TestCase):
         grid_size = [10, 10]
         self.grid = Grid(self.board, grid_size)
 
-        self.agent1 = TopCongestionAgent((9, 0), 3)
-        self.agent2 = TopCongestionAgent((4, 8), 1)
+        self.agent1 = TopCongestionAgent((9, 0), 2)
+        self.agent2 = TopCongestionAgent((4, 8), 2)
         self.agent3 = TopCongestionAgent((8, 9), 2)
 
         self.obstacle1 = Obstacle((5, 0))
@@ -69,8 +69,8 @@ class TestBroker(unittest.TestCase):
 
         broker.assign_items_to_agents()
 
-        self.assertEqual(self.item4.agent_id, self.agent1.id)
-        self.assertEqual(self.item1.agent_id, self.agent1.id)
+        self.assertEqual(self.item4.agent_id, self.agent2.id)
+        self.assertEqual(self.item1.agent_id, self.agent2.id)
         self.assertEqual(self.item7.agent_id, self.agent3.id)
 
         self.assertEqual(self.agent1.total_cost, 17)

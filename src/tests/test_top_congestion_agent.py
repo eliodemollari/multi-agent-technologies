@@ -9,8 +9,8 @@ from src.simulation.reactive_agents import TopCongestionAgent
 class TestTopCongestionAgent(unittest.TestCase):
     def setUp(self):
         self.board = [[[] for _ in range(10)] for _ in range(10)]
-        grid_size = [10, 10]
-        self.grid = Grid(self.board, grid_size)
+        self.grid_size = [10, 10]
+        self.grid = Grid(self.board, self.grid_size)
 
         # Create objects on the grid
         self.agent = TopCongestionAgent((0, 0), 3)
@@ -48,7 +48,7 @@ class TestTopCongestionAgent(unittest.TestCase):
         self.agent.items.append(item2)
         self.agent.items.append(item3)
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, True)
         self.assertIsInstance(intention, Move)
 
     def test_agent_having_all_items_in_transit_on_delivery_station(self):
@@ -68,7 +68,7 @@ class TestTopCongestionAgent(unittest.TestCase):
         # Agent on delivery station
         self.agent.set_position(self.delivery_station1.position)
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, True)
         self.assertIsInstance(intention, Deliver)
 
     def test_agent_having_assigned_items_to_pickup(self):
@@ -85,7 +85,7 @@ class TestTopCongestionAgent(unittest.TestCase):
         self.agent.items.append(item2)
         self.agent.items.append(item3)
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, True)
         self.assertIsInstance(intention, Move)
 
     def test_agent_having_assigned_items_to_pickup_on_pickup_station(self):
@@ -105,39 +105,22 @@ class TestTopCongestionAgent(unittest.TestCase):
         # Agent on pickup station
         self.agent.set_position(self.pickup_station.position)
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, True)
         self.assertIsInstance(intention, Pickup)
 
     def test_agent_not_carrying_item_on_pickup_station(self):
         # Test scenario where agent is not carrying an item and is on a PickupStation
-        # Add items to pickup stations
-        for _ in range(5):
-            self.pickup_station.items.append(
-                Item(
-                    status=ItemStatus.AWAITING_PICKUP,
-                    created_tick=0,
-                    source=self.pickup_station,
-                    destination=self.delivery_station
-                )
-            )
-
-        # Agent on pickup station
+        item1 = Item(0, self.pickup_station, self.delivery_station1, ItemStatus.ASSIGNED_TO_AGENT, 1)
+        self.agent.items.append(item1)
         self.pickup_station.set_position((0, 0))
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, False)
         self.assertIsInstance(intention, Pickup)
 
     def test_agent_not_carrying_item_not_on_pickup_station(self):
         # Test scenario where agent is not carrying an item and is not on a PickupStation
-        # Add items to pickup stations
-        for _ in range(5):
-            self.pickup_station.items.append(
-                Item(status=ItemStatus.AWAITING_PICKUP,
-                     created_tick=0,
-                     source=self.pickup_station,
-                     destination=self.delivery_station
-                     )
-            )
+        item1 = Item(0, self.pickup_station, self.delivery_station1, ItemStatus.ASSIGNED_TO_AGENT, 1)
+        self.agent.items.append(item1)
 
-        intention = self.agent.make_intention(self.grid)
+        intention = self.agent.make_intention(self.grid, True)
         self.assertIsInstance(intention, Move)

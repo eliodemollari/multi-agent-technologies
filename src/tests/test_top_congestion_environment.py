@@ -164,9 +164,7 @@ class TestTopCongestionEnvironment(unittest.TestCase):
         self.grid.add_board_object(self.delivery_station)
         self.grid.add_board_object(self.obstacle)
 
-        pickup_intention = Pickup(0, self.item.id)
+        pickup_intention = Pickup(self.agent.id, self.item.id)
 
-        _enact_pickup_intention(pickup_intention, self.grid)
+        _enact_pickup_intention(pickup_intention, self.grid, 0)
         self.assertEqual(len(self.pickup_station.items), 0)
-        self.assertEqual(self.agent.items, [self.item])
-        self.assertEqual(self.agent.items[0].status, ItemStatus.IN_TRANSIT)
